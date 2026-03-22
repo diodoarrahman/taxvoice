@@ -32,7 +32,7 @@ export default function KnowledgeDetailPage() {
   if (loading) return (
     <div className="knowledge-loading">
       <div className="spinner" />
-      <p>Memuat artikel...</p>
+      <p>Loading article...</p>
     </div>
   )
 
@@ -53,7 +53,7 @@ export default function KnowledgeDetailPage() {
     <div className="detail-page">
       {/* Back Button */}
       <button onClick={() => navigate('/knowledge')} className="back-button">
-        ← Kembali ke Knowledge Hub
+        ← Back to Knowledge Hub
       </button>
 
       {/* Thumbnail */}

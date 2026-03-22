@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 
-const CATEGORIES = ['Semua', 'pajak', 'APBN', 'transparansi', 'pembangunan', 'panduan', 'edukasi']
+const CATEGORIES = ['All', 'tax', 'budget', 'transparency', 'development', 'guide', 'education']
 
 export default function KnowledgePage() {
   const [articles, setArticles] = useState([])
@@ -30,7 +30,7 @@ export default function KnowledgePage() {
   }
 
   const filtered = articles.filter(article => {
-    const matchCategory = activeCategory === 'Semua' || article.category === activeCategory
+    const matchCategory = activeCategory === 'All' || article.category === activeCategory
     const matchSearch = article.title.toLowerCase().includes(search.toLowerCase())
     return matchCategory && matchSearch
   })
@@ -40,14 +40,14 @@ export default function KnowledgePage() {
       {/* Header */}
       <div className="knowledge-header">
         <h1>Knowledge Hub</h1>
-        <p>Pelajari dunia perpajakan dan keuangan negara dengan cara yang mudah dipahami</p>
+        <p>Learn about taxation and public finance in a clear and accessible way</p>
       </div>
 
       {/* Search & Filter */}
       <div className="knowledge-controls">
         <input
           type="text"
-          placeholder="Cari artikel..."
+          placeholder="Search articles..."
           value={search}
           onChange={e => setSearch(e.target.value)}
           className="knowledge-search"
@@ -69,11 +69,11 @@ export default function KnowledgePage() {
       {loading ? (
         <div className="knowledge-loading">
           <div className="spinner" />
-          <p>Memuat artikel...</p>
+          <p>Loading articles...</p>
         </div>
       ) : filtered.length === 0 ? (
         <div className="knowledge-empty">
-          <p>Tidak ada artikel yang cocok.</p>
+          <p>No articles found.</p>
         </div>
       ) : (
         <div className="articles-grid">
