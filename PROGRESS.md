@@ -61,18 +61,21 @@
 
 ### Hari 15-17 — Tabel Articles & Data Dummy
 - [x] Buat tabel `articles` di Supabase via SQL Editor
-- [x] Aktifkan RLS + buat policy public read pada tabel `articles`
+- [x] Aktifkan RLS + buat policy `articles_public_read` (SELECT for all)
 - [x] Input 10 artikel dummy dalam bahasa Inggris dengan kategori:
   - tax, budget, transparency, development, guide, education
 
 ### Hari 18-20 — Halaman /knowledge
 - [x] Buat `src/pages/KnowledgePage.jsx`:
-  - Fetch artikel dari Supabase (hanya kolom yang dibutuhkan, tanpa content)
-  - Filter by category (All, tax, budget, transparency, development, guide, education)
+  - Fetch artikel dari Supabase (tanpa kolom content)
+  - Filter by category: All, tax, budget, transparency, development, guide, education
   - Search by title (client-side filtering)
-  - Card grid responsive dengan ArticleCard component
+  - Card grid responsive dengan komponen ArticleCard
   - Loading spinner & empty state
 - [x] Tambah CSS knowledge page di `src/index.css`
+- [x] Fix bug: `activeCategory` default value `'Semua'` → `'All'`
+- [x] Fix bug: `categoryColors` key diupdate dari bahasa Indonesia ke Inggris (tax, budget, dll)
+- [x] Fix bug: label `menit baca` → `min read`
 
 ### Hari 21-22 — Halaman /knowledge/:id
 - [x] Install `react-markdown`
@@ -324,6 +327,9 @@ VITE_SUPABASE_ANON_KEY=eyJhbGci...
 | Landing page kosong | `export function` bukan `export default function` | Tambahkan kata `default` |
 | Ilustrasi SVG tidak muncul | viewBox lama tidak diganti setelah update SVG | Sesuaikan viewBox dengan ukuran SVG baru |
 | Tailwind tidak terbaca di LoginPage | `@import "tailwindcss"` belum ada di index.css | Tambahkan `@import "tailwindcss"` di baris pertama index.css |
+| Artikel tidak muncul di /knowledge | `activeCategory` default masih `'Semua'` bukan `'All'` | Ganti `useState('Semua')` → `useState('All')` |
+| Badge warna artikel semua abu-abu | Key `categoryColors` masih bahasa Indonesia | Update key ke: tax, budget, transparency, development, guide, education |
+| Label durasi masih Indonesia | `menit baca` tidak diupdate | Ganti ke `min read` |
 
 ---
 
