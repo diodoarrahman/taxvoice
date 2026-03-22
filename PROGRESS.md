@@ -15,8 +15,8 @@
 ---
 
 ## 📍 Status Saat Ini
-**Fase 1 — Fondasi | Hari 8-9**
-> Siap memulai: Setup Supabase (buat tabel users, konfigurasi Auth Email, isi src/lib/supabase.js)
+**Fase 2 — Knowledge Hub & Dashboard | Hari 15**
+> Siap memulai: Buat tabel `articles` di Supabase, input 10 artikel dummy, buat halaman /knowledge
 
 ---
 
@@ -39,9 +39,26 @@
 - [x] Buat `src/components/Sidebar.jsx` — sidebar navigasi fixed dengan NavLink aktif
 - [x] Buat `src/components/Layout.jsx` — wrapper dengan Outlet untuk nested routes
 - [x] Update `src/App.jsx` — routing lengkap semua halaman
-- [x] Update `src/index.css` — global styles + landing page styles
+- [x] Update `src/index.css` — global styles + landing page styles (fix: @import tailwindcss harus di baris pertama)
 - [x] Buat semua page stubs di `src/pages/`
 - [x] Buat `src/pages/LandingPage.jsx` — landing page lengkap dengan semua section
+
+### Hari 8-12 — Supabase, Auth & Deploy
+- [x] Buat Supabase project (region: Southeast Asia - Singapore)
+- [x] Ambil API keys → simpan di `.env.local`
+- [x] Isi `src/lib/supabase.js` dengan createClient
+- [x] Buat tabel `users` di Supabase via SQL Editor
+- [x] Nonaktifkan "Confirm email" di Supabase Auth (untuk kemudahan development)
+- [x] Buat trigger otomatis `on_auth_user_created` + function `handle_new_user()`:
+  - Setiap user register → data (id, email, full_name) otomatis disalin ke tabel `users`
+  - `full_name` diambil dari `raw_user_meta_data` yang dikirim saat `signUp`
+- [x] Test koneksi Supabase dari React (via `supabase.from('users').select('*')`)
+- [x] Buat `src/pages/LoginPage.jsx` — form login lengkap dengan error handling
+- [x] Buat `src/pages/RegisterPage.jsx` — form register lengkap (nama, email, password)
+- [x] Buat `src/components/ProtectedRoute.jsx` — proteksi route authenticated
+- [x] Update `src/App.jsx` — wrap Layout dengan ProtectedRoute
+- [x] Deploy ke Vercel + tambah environment variables di Vercel dashboard
+- [x] Test end-to-end: register → login → proteksi route → semua berhasil ✅
 
 ---
 
@@ -53,14 +70,15 @@ taxvoice/
 ├── src/
 │   ├── assets/
 │   ├── components/
-│   │   ├── Sidebar.jsx      ← navigasi sidebar fixed, NavLink aktif
-│   │   └── Layout.jsx       ← wrapper: Sidebar + Outlet
+│   │   ├── Sidebar.jsx         ← navigasi sidebar fixed, NavLink aktif
+│   │   ├── Layout.jsx          ← wrapper: Sidebar + Outlet
+│   │   └── ProtectedRoute.jsx  ← proteksi route, cek session Supabase
 │   ├── lib/
-│   │   └── supabase.js      ← BELUM DIISI (next step)
+│   │   └── supabase.js         ← createClient dengan env variables
 │   ├── pages/
 │   │   ├── LandingPage.jsx         ← selesai, lengkap
-│   │   ├── LoginPage.jsx           ← stub kosong
-│   │   ├── RegisterPage.jsx        ← stub kosong
+│   │   ├── LoginPage.jsx           ← selesai, form login + error handling
+│   │   ├── RegisterPage.jsx        ← selesai, form register + error handling
 │   │   ├── PayTaxesPage.jsx        ← stub kosong
 │   │   ├── SimulatorPage.jsx       ← stub kosong
 │   │   ├── KnowledgePage.jsx       ← stub kosong
@@ -70,7 +88,7 @@ taxvoice/
 │   │   ├── ImpactPage.jsx          ← stub kosong
 │   │   ├── ProfilePage.jsx         ← stub kosong
 │   │   └── NotFoundPage.jsx        ← selesai
-│   ├── App.jsx              ← routing lengkap
+│   ├── App.jsx              ← routing lengkap + ProtectedRoute
 │   ├── index.css            ← global styles + landing page CSS
 │   └── main.jsx             ← entry point
 ├── .env.local               ← JANGAN DI-PUSH ke GitHub
@@ -90,7 +108,7 @@ Public (tanpa sidebar):
   /login      → LoginPage
   /register   → RegisterPage
 
-Authenticated (dengan sidebar via Layout):
+Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
   /pay-taxes          → PayTaxesPage
   /simulator          → SimulatorPage
   /knowledge          → KnowledgePage
@@ -121,22 +139,27 @@ Authenticated (dengan sidebar via Layout):
 - Tidak ada file `tailwind.config.js`
 - CSS utilities langsung tersedia tanpa konfigurasi tambahan
 - Custom styles ditulis di `src/index.css` dengan CSS biasa (bukan `@apply`)
+- **PENTING**: `@import "tailwindcss"` harus di baris pertama `index.css` — kalau tidak, Tailwind tidak terbaca
 
 ---
 
-## 🗄️ Skema Database Supabase (Rencana)
+## 🗄️ Skema Database Supabase
 
-### Tabel `users`
+### Tabel `users` ✅ SUDAH DIBUAT
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
-| id | UUID PK | Sama dengan Supabase Auth UID |
-| full_name | TEXT | Nama lengkap |
+| id | UUID PK | REFERENCES auth.users(id) ON DELETE CASCADE |
+| full_name | TEXT | Diambil dari raw_user_meta_data saat register |
 | email | TEXT UNIQUE | Sinkron dari Auth |
 | occupation | TEXT | Pekerjaan (opsional) |
-| annual_income_dummy | BIGINT | Penghasilan dummy untuk simulasi |
+| annual_income_dummy | BIGINT | Default 0, untuk simulasi |
 | created_at | TIMESTAMPTZ | Default now() |
 
-### Tabel `preferences`
+### Trigger & Function ✅ SUDAH DIBUAT
+- **Function**: `public.handle_new_user()` — menyalin data dari Auth ke tabel users
+- **Trigger**: `on_auth_user_created` — jalan otomatis AFTER INSERT ON auth.users
+
+### Tabel `preferences` (Belum dibuat — Fase 3)
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
@@ -148,7 +171,7 @@ Authenticated (dengan sidebar via Layout):
 | social_pct | INTEGER | 0-100 |
 | created_at | TIMESTAMPTZ | Default now() |
 
-### Tabel `articles`
+### Tabel `articles` (Belum dibuat — Fase 2, next step)
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
@@ -159,7 +182,7 @@ Authenticated (dengan sidebar via Layout):
 | read_time_min | INTEGER | Estimasi menit baca |
 | created_at | TIMESTAMPTZ | Default now() |
 
-### Tabel `forum_posts`
+### Tabel `forum_posts` (Belum dibuat — Fase 4)
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
@@ -169,7 +192,7 @@ Authenticated (dengan sidebar via Layout):
 | likes_count | INTEGER | Default 0 |
 | created_at | TIMESTAMPTZ | Default now() |
 
-### Tabel `forum_replies`
+### Tabel `forum_replies` (Belum dibuat — Fase 4)
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
@@ -180,16 +203,66 @@ Authenticated (dengan sidebar via Layout):
 
 ---
 
+## 🔐 Cara Kerja Auth (Penting untuk dipahami)
+
+### Alur Register
+```
+User isi form (nama, email, password) → klik Daftar
+        ↓
+supabase.auth.signUp({ email, password, options: { data: { full_name } } })
+        ↓
+Supabase simpan ke auth.users + session ke localStorage
+        ↓
+Trigger on_auth_user_created aktif otomatis
+        ↓
+handle_new_user() salin (id, email, full_name) ke tabel users
+        ↓
+navigate('/login')
+```
+
+### Alur Login
+```
+User isi form (email, password) → klik Masuk
+        ↓
+supabase.auth.signInWithPassword({ email, password })
+        ↓
+Supabase validasi → simpan session ke localStorage otomatis
+        ↓
+navigate('/impact')
+```
+
+### Alur Proteksi Route (ProtectedRoute.jsx)
+```
+User buka halaman authenticated (misal /impact)
+        ↓
+ProtectedRoute render — session = undefined (belum tahu)
+        ↓
+return null — layar kosong sebentar
+        ↓
+getSession() cek localStorage browser
+        ↓
+Tidak ada session → redirect /login
+Ada session → tampilkan Layout + halaman tujuan ✅
+```
+
+### Kenapa session bisa persist?
+- Supabase menyimpan session token di **localStorage** browser
+- localStorage tidak hilang saat browser ditutup
+- Key-nya: `sb-xxxxxx-auth-token`
+- `getSession()` membaca dari localStorage ini
+
+---
+
 ## 📅 Timeline MVP (73 Hari)
 
-### Fase 1: Fondasi (Hari 1-14 | 18 Mar – 1 Apr)
+### Fase 1: Fondasi (Hari 1-14 | 18 Mar – 1 Apr) ✅ SELESAI
 - [x] Hari 1-4: Environment setup, boilerplate
 - [x] Hari 5-7: Navbar/Sidebar, Footer, Layout dasar
-- [ ] **Hari 8-9: Setup Supabase + tabel users + Auth Email** ← SEKARANG
-- [ ] Hari 10-11: Halaman Register & Login
-- [ ] Hari 12-14: Routing final + deploy Vercel
+- [x] Hari 8-10: Setup Supabase + tabel users + Auth Email + trigger
+- [x] Hari 11: Halaman Register & Login + ProtectedRoute
+- [x] Hari 12: Deploy Vercel + test end-to-end
 
-### Fase 2: Knowledge Hub & Dashboard (Hari 15-28 | 2-15 Apr)
+### Fase 2: Knowledge Hub & Dashboard (Hari 15-28 | 2-15 Apr) ← SEKARANG
 - [ ] Hari 15-17: Buat tabel articles, input 10 artikel dummy
 - [ ] Hari 18-20: Halaman /knowledge (card grid dari Supabase)
 - [ ] Hari 21-22: Halaman /knowledge/:id (detail artikel)
@@ -228,7 +301,9 @@ VITE_SUPABASE_URL=https://xxxxx.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJhbGci...
 ```
 
-Sudah ada di `.gitignore`? Pastikan baris ini ada:
+Sudah ditambahkan juga di **Vercel dashboard** → Project Settings → Environment Variables.
+
+Sudah ada di `.gitignore`:
 ```
 .env.local
 node_modules/
@@ -245,6 +320,7 @@ dist/
 | `@import must precede all other statements` | `@import` Google Fonts tidak di baris pertama CSS | Pindahkan `@import` ke baris paling atas index.css |
 | Landing page kosong | `export function` bukan `export default function` | Tambahkan kata `default` |
 | Ilustrasi SVG tidak muncul | viewBox lama tidak diganti setelah update SVG | Sesuaikan viewBox dengan ukuran SVG baru |
+| Tailwind tidak terbaca di LoginPage | `@import "tailwindcss"` belum ada di index.css | Tambahkan `@import "tailwindcss"` di baris pertama index.css |
 
 ---
 
@@ -256,6 +332,8 @@ dist/
 - **Tombol "Get Started"** scroll ke `#features` di halaman yang sama (bukan ke /register)
 - **Ilustrasi hero** menggunakan SVG custom (bukan gambar AI) — lebih ringan & scalable
 - **CSS custom** ditulis di `index.css` dengan class naming BEM (`block__element--modifier`)
+- **Confirm email dimatikan** saat development — aktifkan kembali sebelum launch
+- **UI polish ditunda** ke Fase 5 (hari 60-62) — fokus dulu ke fungsionalitas
 
 ---
 
@@ -264,6 +342,6 @@ dist/
 1. Buka chat baru dengan Claude
 2. Tulis: *"Ini progress project TaxVoice saya:"*
 3. Paste seluruh isi file PROGRESS.md ini
-4. Lanjutkan dengan pertanyaan atau task yang ingin dikerjakan
+4. Lanjutkan dengan: *"Lanjut ke Fase 2 ya"*
 
 Claude akan langsung memahami konteks penuh tanpa perlu dijelaskan dari awal.
