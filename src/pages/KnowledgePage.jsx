@@ -7,7 +7,7 @@ const CATEGORIES = ['All', 'tax', 'budget', 'transparency', 'development', 'guid
 export default function KnowledgePage() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
-  const [activeCategory, setActiveCategory] = useState('Semua')
+  const [activeCategory, setActiveCategory] = useState('All')
   const [search, setSearch] = useState('')
 
   useEffect(() => {
@@ -92,12 +92,12 @@ function ArticleCard({ article }) {
   })
 
   const categoryColors = {
-    pajak: '#2563eb',
-    APBN: '#7c3aed',
-    transparansi: '#dc2626',
-    pembangunan: '#d97706',
-    panduan: '#7c3aed',
-    edukasi: '#059669',
+    tax: '#2563eb',
+    budget: '#7c3aed',
+    transparency: '#dc2626',
+    development: '#d97706',
+    guide: '#7c3aed',
+    education: '#059669',
   }
 
   return (
@@ -115,7 +115,7 @@ function ArticleCard({ article }) {
         <h3 className="article-title">{article.title}</h3>
         <div className="article-meta">
           <span>📅 {formattedDate}</span>
-          <span>⏱ {article.read_time_min} menit baca</span>
+          <span>⏱ {article.read_time_min} min read</span>
         </div>
       </div>
     </Link>
