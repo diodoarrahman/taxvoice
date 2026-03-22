@@ -4,7 +4,9 @@
    TaxVoice Global Styles
    Tailwind v4 via @tailwindcss/vite — CSS murni untuk komponen kustom
    ============================================================ */
-
+html {
+  scroll-behavior: smooth;
+}
 /* --- Reset & Base --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

@@ -16,7 +16,7 @@ export default function LandingPage() {
             Participate, Learn, and See Your Taxes at Work for a Better Indonesia.
           </p>
           <div className="hero__cta">
-            <Link to="/register" className="btn-primary">Get Started</Link>
+            <a href="#features" className="btn-primary">Get Started</a>
             <Link to="/login" className="btn-outline">Login</Link>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function LandingPage() {
       </section>
 
       {/* FITUR */}
-      <section className="features">
+      <section className="features" id="features">
         <div className="features__grid">
           <div className="feature-card">
             <div className="feature-card__icon">
