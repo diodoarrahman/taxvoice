@@ -1638,3 +1638,17 @@ body {
   word-break: break-all;
 }
 .sim-ref-link:hover { text-decoration: underline; }
+
+/* Slider limit feedback */
+.sector-limit { min-height: 16px; margin-top: 4px; }
+.sector-limit-text {
+  font-size: 0.72rem;
+  color: #D85A30;
+  font-weight: 500;
+}
+.sim-limit-text {
+  font-size: 0.72rem;
+  color: #D85A30;
+  font-weight: 500;
+  margin-top: 3px;
+}

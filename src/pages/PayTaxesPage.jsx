@@ -153,12 +153,20 @@ export default function PayTaxesPage() {
                 type="range"
                 className="sector-slider"
                 min={0}
-                max={values[s.key] + remaining}
+                max={100}                    // ← selalu 100
                 step={1}
                 value={values[s.key]}
                 style={{ '--accent-color': s.color }}
                 onChange={e => handleSlider(s.key, e.target.value)}
               />
+              {/* Tambah keterangan di bawah slider */}
+              <div className="sector-limit">
+                {remaining === 0 && values[s.key] < 100 && (
+                  <span className="sector-limit-text">
+                    Max reached — reduce another sector first
+                  </span>
+                )}
+              </div>
               <div className="sector-desc">{s.desc}</div>
             </div>
           ))}

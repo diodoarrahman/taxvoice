@@ -8,11 +8,11 @@ import {
 // ─── Konstanta ───────────────────────────────────────────────────────────────
 
 const SECTORS = [
-  { key: 'education',      label: 'Education',       icon: '📚', color: '#378ADD', ideal: 25 },
-  { key: 'health',         label: 'Health',           icon: '🏥', color: '#1D9E75', ideal: 20 },
-  { key: 'infrastructure', label: 'Infrastructure',   icon: '🏗️', color: '#EF9F27', ideal: 20 },
-  { key: 'defense',        label: 'Defense',          icon: '🛡️', color: '#D85A30', ideal: 10 },
-  { key: 'social',         label: 'Social Welfare',   icon: '🤝', color: '#7F77DD', ideal: 25 },
+  { key: 'education', label: 'Education', icon: '📚', color: '#378ADD', ideal: 25 },
+  { key: 'health', label: 'Health', icon: '🏥', color: '#1D9E75', ideal: 20 },
+  { key: 'infrastructure', label: 'Infrastructure', icon: '🏗️', color: '#EF9F27', ideal: 20 },
+  { key: 'defense', label: 'Defense', icon: '🛡️', color: '#D85A30', ideal: 10 },
+  { key: 'social', label: 'Social Welfare', icon: '🤝', color: '#7F77DD', ideal: 25 },
 ]
 
 const INITIAL_VALUES = {
@@ -185,16 +185,16 @@ function calcSectorScore(value, ideal) {
 
 function getGrade(score) {
   if (score >= 85) return { grade: 'A', label: 'Excellent', color: '#1D9E75' }
-  if (score >= 70) return { grade: 'B', label: 'Good',      color: '#378ADD' }
-  if (score >= 50) return { grade: 'C', label: 'Fair',      color: '#EF9F27' }
-  if (score >= 30) return { grade: 'D', label: 'Poor',      color: '#D85A30' }
-  return               { grade: 'F', label: 'Critical',  color: '#c0392b' }
+  if (score >= 70) return { grade: 'B', label: 'Good', color: '#378ADD' }
+  if (score >= 50) return { grade: 'C', label: 'Fair', color: '#EF9F27' }
+  if (score >= 30) return { grade: 'D', label: 'Poor', color: '#D85A30' }
+  return { grade: 'F', label: 'Critical', color: '#c0392b' }
 }
 
 function getInsight(key, value, ideal) {
   const diff = value - ideal
   if (diff < -7) return SECTOR_INSIGHTS[key].low
-  if (diff >  7) return SECTOR_INSIGHTS[key].high
+  if (diff > 7) return SECTOR_INSIGHTS[key].high
   return SECTOR_INSIGHTS[key].ideal
 }
 
@@ -208,17 +208,17 @@ function calcOverallScore(scores) {
 // ─── Komponen ─────────────────────────────────────────────────────────────────
 
 export default function SimulatorPage() {
-  const [values, setValues]       = useState(INITIAL_VALUES)
-  const [result, setResult]       = useState(null)
-  const [history, setHistory]     = useState([])
+  const [values, setValues] = useState(INITIAL_VALUES)
+  const [result, setResult] = useState(null)
+  const [history, setHistory] = useState([])
   const [activeTab, setActiveTab] = useState('overview')
 
-  const total     = SECTORS.reduce((sum, s) => sum + values[s.key], 0)
+  const total = SECTORS.reduce((sum, s) => sum + values[s.key], 0)
   const remaining = 100 - total
-  const isValid   = total === 100
+  const isValid = total === 100
 
   const handleSlider = (key, val) => {
-    const newVal     = parseInt(val)
+    const newVal = parseInt(val)
     const otherTotal = SECTORS
       .filter(s => s.key !== key)
       .reduce((sum, s) => sum + values[s.key], 0)
@@ -231,7 +231,7 @@ export default function SimulatorPage() {
     SECTORS.forEach(s => {
       scores[s.key] = calcSectorScore(values[s.key], s.ideal)
     })
-    const overall   = calcOverallScore(scores)
+    const overall = calcOverallScore(scores)
     const newResult = { values: { ...values }, scores, overall }
     setResult(newResult)
     setHistory(prev => [
@@ -244,18 +244,18 @@ export default function SimulatorPage() {
   // Data untuk charts
   const radarData = result
     ? SECTORS.map(s => ({
-        sector: s.label,
-        Your:   result.scores[s.key],
-        Ideal:  100,
-      }))
+      sector: s.label,
+      Your: result.scores[s.key],
+      Ideal: 100,
+    }))
     : []
 
   const barData = result
     ? SECTORS.map(s => ({
-        name:    s.label,
-        'Your Allocation': result.values[s.key],
-        'Ideal Allocation': s.ideal,
-      }))
+      name: s.label,
+      'Your Allocation': result.values[s.key],
+      'Ideal Allocation': s.ideal,
+    }))
     : []
 
   const overallGrade = result ? getGrade(result.overall) : null
@@ -294,12 +294,17 @@ export default function SimulatorPage() {
                   type="range"
                   className="sim-slider"
                   min={0}
-                  max={values[s.key] + remaining}
+                  max={100}                    // ← selalu 100
                   step={1}
                   value={values[s.key]}
-                  style={{ '--sim-accent': s.color }}
+                  style={{ '--sim-accent': remaining === 0 && values[s.key] < 100 ? '#ccc' : s.color }}
                   onChange={e => handleSlider(s.key, e.target.value)}
                 />
+                {remaining === 0 && values[s.key] < 100 && (
+                  <div className="sim-limit-text">
+                    Max reached — reduce another sector first
+                  </div>
+                )}
                 <div className="sim-sector-bar-wrap">
                   <div
                     className="sim-sector-bar"
@@ -393,8 +398,8 @@ export default function SimulatorPage() {
                 <div className="sim-tab-content">
                   <div className="sim-sector-cards">
                     {SECTORS.map(s => {
-                      const score   = result.scores[s.key]
-                      const grade   = getGrade(score)
+                      const score = result.scores[s.key]
+                      const grade = getGrade(score)
                       const insight = getInsight(s.key, result.values[s.key], s.ideal)
                       return (
                         <div key={s.key} className="sim-sector-card">
@@ -454,8 +459,8 @@ export default function SimulatorPage() {
                         <YAxis tick={{ fontSize: 11 }} unit="%" />
                         <Tooltip formatter={v => v + '%'} />
                         <Legend />
-                        <Bar dataKey="Your Allocation"  fill="#378ADD" radius={[4,4,0,0]} />
-                        <Bar dataKey="Ideal Allocation" fill="#1D9E75" radius={[4,4,0,0]}
+                        <Bar dataKey="Your Allocation" fill="#378ADD" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="Ideal Allocation" fill="#1D9E75" radius={[4, 4, 0, 0]}
                           fillOpacity={0.5} />
                       </BarChart>
                     </ResponsiveContainer>
@@ -534,8 +539,8 @@ export default function SimulatorPage() {
                       </thead>
                       <tbody>
                         {SECTORS.map(s => {
-                          const score     = result.scores[s.key]
-                          const grade     = getGrade(score)
+                          const score = result.scores[s.key]
+                          const grade = getGrade(score)
                           const deviation = result.values[s.key] - s.ideal
                           return (
                             <tr key={s.key}>
