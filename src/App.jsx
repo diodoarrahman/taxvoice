@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage'
 import PayTaxesPage from './pages/PayTaxesPage'
 import SimulatorPage from './pages/SimulatorPage'
 import KnowledgePage from './pages/KnowledgePage'
+import CreatePostPage from './pages/CreatePostPage'
 import KnowledgeDetailPage from './pages/KnowledgeDetailPage'
 import CommunityPage from './pages/CommunityPage'
 import CommunityDetailPage from './pages/CommunityDetailPage'
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/knowledge" element={<KnowledgePage />} />
           <Route path="/knowledge/:id" element={<KnowledgeDetailPage />} />
           <Route path="/community" element={<CommunityPage />} />
+          <Route path="/community/new" element={<CreatePostPage />} />
           <Route path="/community/:id" element={<CommunityDetailPage />} />
           <Route path="/impact" element={<ImpactPage />} />
           <Route path="/profile" element={<ProfilePage />} />
