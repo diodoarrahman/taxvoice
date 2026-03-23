@@ -16,8 +16,8 @@
 ---
 
 ## 📍 Status Saat Ini
-**Fase 4 — Community Forum | Hari 43**
-> Siap memulai: Buat tabel forum_posts & forum_replies di Supabase, aktifkan RLS
+**Fase 5 — Polish & Presentasi | Hari 57**
+> Siap memulai: Landing Page lengkap & menarik
 
 ---
 
@@ -105,6 +105,64 @@
       - References: 8 sumber ilmiah (UNESCO, WHO, IMF, World Bank, SIPRI, ADB, BPS, dll)
       - Riwayat simulasi disimpan di state (max 5 run terakhir)
 
+### Fase 4: Community Forum (Hari 43-56) ✅ SELESAI
+- [x] Buat tabel `forum_posts` di Supabase:
+      - Kolom: id, user_id (FK → users), title, content, created_at
+      - Kolom `likes_count` sempat dibuat lalu DIHAPUS — diganti sistem post_likes
+      - RLS aktif: SELECT (authenticated), INSERT/UPDATE/DELETE (owner only)
+- [x] Buat tabel `forum_replies` di Supabase:
+      - Kolom: id, post_id (FK → forum_posts), user_id (FK → users), content, created_at
+      - RLS aktif: SELECT (authenticated), INSERT/DELETE (owner only)
+- [x] Buat tabel `post_likes` di Supabase:
+      - Kolom: id, post_id (FK → forum_posts), user_id (FK → users)
+      - UNIQUE(post_id, user_id) — mencegah double like
+      - RLS aktif: SELECT (authenticated), INSERT/DELETE (owner only)
+- [x] Tambah RLS policy `users_public_read` di tabel `users`:
+      - SELECT for authenticated — diperlukan agar join ke users berhasil
+- [x] Buat `src/pages/CommunityPage.jsx`:
+      - Fetch semua forum_posts + join users (author name) + join post_likes (count)
+      - Search client-side by title/content/author
+      - Card list dengan excerpt, avatar inisial, waktu relatif (timeAgo)
+      - Tombol "+ New Post" → navigate ke /community/new
+      - Loading, error, dan empty state
+- [x] Buat `src/pages/CreatePostPage.jsx`:
+      - Form: title (min 10 char, max 120) + content (min 20 char, max 2000)
+      - Character counter real-time
+      - Validasi sebelum submit
+      - Insert ke forum_posts dengan user_id dari supabase.auth.getUser()
+      - Redirect ke /community setelah berhasil
+      - Tombol Cancel → back ke /community
+- [x] Buat `src/pages/CommunityDetailPage.jsx`:
+      - Fetch 1 post by ID (useParams) + join users
+      - Fetch semua replies by post_id + join users
+      - Fetch like status & total likes dari tabel post_likes (bukan cached count)
+      - Render thread: post lengkap + daftar replies
+      - Avatar inisial + nama author + waktu relatif
+      - Tombol Delete post — hanya muncul jika currentUser.id === post.user_id
+      - Tombol Delete reply — hanya muncul jika currentUser.id === reply.user_id
+      - Delete post → redirect ke /community
+      - Form reply: textarea + character counter + validasi + submit
+      - Replies refresh otomatis setelah submit tanpa reload halaman
+      - Fitur Like/Unlike:
+        * Status like per-user diambil dari post_likes
+        * Toggle like/unlike — insert/delete dari post_likes
+        * Count dihitung real-time dari COUNT(post_likes) bukan kolom cache
+        * Tombol like berubah warna merah saat active
+- [x] Buat `src/pages/ProfilePage.jsx`:
+      - Fetch profil user dari tabel users (full_name, email, created_at)
+      - Fetch jumlah posts & replies user dari forum_posts & forum_replies
+      - Avatar inisial besar + nama + email + tanggal bergabung
+      - Stat cards: total Posts & Replies
+      - Tombol Go to Community Forum
+      - Tombol Sign Out → supabase.auth.signOut() → redirect /login
+- [x] Tambah route `/community/new` di App.jsx (SEBELUM `/community/:id`)
+- [x] Buat `vercel.json` di root project untuk fix 404 saat refresh di production:
+      { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+- [x] Fix bug: nama author Anonymous → tambah RLS policy users_public_read
+- [x] Fix bug: likes antar akun saling terhubung → hitung dari post_likes bukan likes_count
+- [x] Fix bug: post tidak bisa diklik setelah drop kolom likes_count → hapus likes_count dari select di CommunityDetailPage fetchPost()
+- [x] Drop kolom likes_count dari forum_posts (tidak terpakai setelah sistem post_likes)
+
 ---
 
 ## 🗂️ Struktur Folder Project
@@ -120,7 +178,7 @@ taxvoice/
 │   ├── lib/
 │   │   └── supabase.js         ← createClient dengan env variables
 │   ├── pages/
-│   │   ├── LandingPage.jsx         ← selesai, lengkap
+│   │   ├── LandingPage.jsx         ← selesai, lengkap (perlu polish di Fase 5)
 │   │   ├── LoginPage.jsx           ← selesai, form login + error handling
 │   │   ├── RegisterPage.jsx        ← selesai, form register + error handling
 │   │   ├── ImpactPage.jsx          ← selesai, 4 stat cards + 3 charts
@@ -128,13 +186,15 @@ taxvoice/
 │   │   ├── KnowledgeDetailPage.jsx ← selesai, detail artikel + markdown
 │   │   ├── PayTaxesPage.jsx        ← selesai, 5 slider + pie chart + upsert Supabase
 │   │   ├── SimulatorPage.jsx       ← selesai, scoring + 4 visualisasi + references
-│   │   ├── CommunityPage.jsx       ← stub kosong
-│   │   ├── CommunityDetailPage.jsx ← stub kosong
-│   │   ├── ProfilePage.jsx         ← stub kosong
+│   │   ├── CommunityPage.jsx       ← selesai, list post + search + likes count
+│   │   ├── CommunityDetailPage.jsx ← selesai, thread + replies + like/unlike + delete
+│   │   ├── CreatePostPage.jsx      ← selesai, form create post + validasi
+│   │   ├── ProfilePage.jsx         ← selesai, profil + stats + logout
 │   │   └── NotFoundPage.jsx        ← selesai
 │   ├── App.jsx              ← routing lengkap + ProtectedRoute
 │   ├── index.css            ← global styles + semua page CSS
 │   └── main.jsx             ← entry point
+├── vercel.json              ← fix 404 refresh di production
 ├── .env.local               ← JANGAN DI-PUSH ke GitHub
 ├── .gitignore
 ├── index.html
@@ -156,10 +216,11 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
   /simulator          → SimulatorPage        ✅ selesai
   /knowledge          → KnowledgePage        ✅ selesai
   /knowledge/:id      → KnowledgeDetailPage  ✅ selesai
-  /community          → CommunityPage        🔲 stub kosong
-  /community/:id      → CommunityDetailPage  🔲 stub kosong
+  /community          → CommunityPage        ✅ selesai
+  /community/new      → CreatePostPage       ✅ selesai (harus SEBELUM /:id)
+  /community/:id      → CommunityDetailPage  ✅ selesai
   /impact             → ImpactPage           ✅ selesai
-  /profile            → ProfilePage          🔲 stub kosong
+  /profile            → ProfilePage          ✅ selesai
   *                   → NotFoundPage         ✅ selesai
 ```
 
@@ -199,6 +260,8 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 | annual_income_dummy | BIGINT | Default 0, untuk simulasi |
 | created_at | TIMESTAMPTZ | Default now() |
 
+**RLS**: Aktif — policy `users_public_read` (SELECT for authenticated)
+
 ### Tabel `articles` ✅
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
@@ -226,24 +289,38 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 
 **RLS**: Aktif — policy "Users can manage own preferences" (ALL operations, auth.uid() = user_id)
 
-### Tabel `forum_posts` 🔲 Belum dibuat
+### Tabel `forum_posts` ✅
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
-| user_id | UUID FK | → users |
+| user_id | UUID FK | → users, ON DELETE CASCADE |
 | title | TEXT | Judul diskusi |
 | content | TEXT | Isi diskusi |
-| likes_count | INTEGER | Default 0 |
 | created_at | TIMESTAMPTZ | Default now() |
 
-### Tabel `forum_replies` 🔲 Belum dibuat
+**RLS**: Aktif — SELECT (authenticated), INSERT/UPDATE/DELETE (auth.uid() = user_id)
+**Catatan**: Kolom `likes_count` sudah di-DROP — likes dihitung dari tabel `post_likes`
+
+### Tabel `forum_replies` ✅
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
-| post_id | UUID FK | → forum_posts |
-| user_id | UUID FK | → users |
+| post_id | UUID FK | → forum_posts, ON DELETE CASCADE |
+| user_id | UUID FK | → users, ON DELETE CASCADE |
 | content | TEXT | Isi balasan |
 | created_at | TIMESTAMPTZ | Default now() |
+
+**RLS**: Aktif — SELECT (authenticated), INSERT/DELETE (auth.uid() = user_id)
+
+### Tabel `post_likes` ✅
+| Kolom | Tipe | Keterangan |
+|-------|------|------------|
+| id | UUID PK | Auto-generated |
+| post_id | UUID FK | → forum_posts, ON DELETE CASCADE |
+| user_id | UUID FK | → users, ON DELETE CASCADE |
+| — | UNIQUE | UNIQUE(post_id, user_id) — cegah double like |
+
+**RLS**: Aktif — SELECT (authenticated), INSERT/DELETE (auth.uid() = user_id)
 
 ### Trigger & Function ✅
 - **Function**: `public.handle_new_user()` — menyalin data dari Auth ke tabel users
@@ -267,6 +344,10 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 - **Slider alokasi** max selalu 100 (posisi visual konsisten), sektor lain tidak bergerak saat digeser, nilai di-clamp di handleSlider
 - **Upsert preferences** pakai `onConflict: 'user_id'` — satu user hanya boleh punya satu baris preferensi
 - **Simulator history** disimpan di state lokal (bukan DB) — max 5 run, hanya untuk line chart tren dalam sesi aktif
+- **Forum tidak anonymous** — nama user selalu ditampilkan, sesuai nilai transparansi TaxVoice
+- **Likes dihitung dari tabel post_likes** — bukan cached column, agar akurat dan tidak race condition
+- **Route /community/new** harus didefinisikan SEBELUM /community/:id di App.jsx
+- **vercel.json** wajib ada untuk SPA — redirect semua URL ke index.html agar refresh tidak 404
 
 ---
 
@@ -315,15 +396,9 @@ Ada session → tampilkan Layout + halaman ✅
 ### Fase 1: Fondasi (Hari 1-14) ✅ SELESAI
 ### Fase 2: Knowledge Hub & Dashboard (Hari 15-28) ✅ SELESAI
 ### Fase 3: Preference Input & Simulator (Hari 29-42) ✅ SELESAI
+### Fase 4: Community Forum (Hari 43-56) ✅ SELESAI
 
-### Fase 4: Community Forum (Hari 43-56) ← SEKARANG
-- [ ] Hari 43-45: Buat tabel `forum_posts` & `forum_replies`, aktifkan RLS
-- [ ] Hari 46-48: Halaman /community (list post + search)
-- [ ] Hari 49-51: Form create post, submit ke Supabase
-- [ ] Hari 52-54: Halaman /community/:id (thread + replies)
-- [ ] Hari 55-56: Fitur like, proteksi route login
-
-### Fase 5: Polish & Presentasi (Hari 57-73)
+### Fase 5: Polish & Presentasi (Hari 57-73) ← SEKARANG
 - [ ] Hari 57-59: Landing Page lengkap & menarik
 - [ ] Hari 60-62: Audit UI seluruh halaman
 - [ ] Hari 63-65: Isi semua data dummy lengkap
@@ -356,6 +431,11 @@ VITE_SUPABASE_ANON_KEY=eyJhbGci...
 | Badge warna artikel semua abu-abu | Key `categoryColors` masih bahasa Indonesia | Update key ke: tax, budget, transparency, development, guide, education |
 | Label durasi masih Indonesia | `menit baca` tidak diupdate | Ganti ke `min read` |
 | Slider sektor lain ikut bergerak | `max` slider dinamis menggeser track sektor lain | Ganti `max` jadi tetap 100, clamp nilai di `handleSlider` |
+| Nama author Anonymous di /community | Tabel users tidak punya RLS policy SELECT | Tambah policy `users_public_read` (SELECT for authenticated) |
+| Likes antar akun saling terhubung | `likesCount` diambil dari stale `post.likes_count` | Hitung COUNT langsung dari tabel `post_likes` di `fetchLikeStatus()` |
+| Post tidak bisa diklik setelah drop kolom likes_count | `fetchPost()` di CommunityDetailPage masih select `likes_count` | Hapus `likes_count` dari select query di fetchPost() |
+| 404 saat refresh halaman di production (Vercel) | Vercel cari file fisik sesuai URL, tidak ada → 404 | Buat `vercel.json` dengan rewrite semua URL ke index.html |
+| `CreatePostPage is not defined` | Komponen dipakai di App.jsx sebelum dibuat filenya | Buat stub dulu `CreatePostPage.jsx` lalu import di App.jsx |
 
 ---
 
@@ -364,6 +444,6 @@ VITE_SUPABASE_ANON_KEY=eyJhbGci...
 1. Buka chat baru dengan Claude
 2. Tulis: *"Ini progress project TaxVoice saya:"*
 3. Paste seluruh isi file PROGRESS.md ini
-4. Lanjutkan dengan: *"Lanjut ke Fase 4 ya"*
+4. Lanjutkan dengan pertanyaan atau instruksi
 
 Claude akan langsung memahami konteks penuh tanpa perlu dijelaskan dari awal.
