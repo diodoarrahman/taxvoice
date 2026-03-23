@@ -4,20 +4,51 @@ export default function LandingPage() {
   return (
     <div className="landing">
 
+      {/* NAVBAR */}
+      <nav className="landing-nav">
+        <div className="landing-nav__logo">TaxVoice</div>
+        <div className="landing-nav__links">
+          <a href="#features">Features</a>
+          <a href="#impact">Impact</a>
+          <a href="#community">Community</a>
+        </div>
+        <div className="landing-nav__actions">
+          <Link to="/login" className="landing-nav__login">Sign In</Link>
+          <Link to="/register" className="landing-nav__cta">Get Started</Link>
+        </div>
+      </nav>
+
       {/* HERO */}
       <section className="hero">
         <div className="hero__content">
-          <span className="hero__badge">Platform Pajak Digital Indonesia</span>
+          <span className="hero__badge">Civic-Fiscal Engagement Platform</span>
           <h1 className="hero__title">
             Empowering Taxpayers,<br />
             <span className="hero__title--accent">Building the Future</span>
           </h1>
           <p className="hero__desc">
-            Participate, Learn, and See Your Taxes at Work for a Better Indonesia.
+            Participate, learn, and see your taxes at work — building a more
+            transparent and accountable Indonesia.
           </p>
           <div className="hero__cta">
-            <a href="#features" className="btn-primary">Get Started</a>
-            <Link to="/login" className="btn-outline">Login</Link>
+            <Link to="/register" className="btn-primary-dark">Create Account</Link>
+            <Link to="/impact" className="btn-outline-dark">See Impact Data</Link>
+          </div>
+          <div className="hero__stats">
+            <div className="hero__stat">
+              <span className="hero__stat-num">10.4%</span>
+              <span className="hero__stat-label">Tax-to-GDP Ratio</span>
+            </div>
+            <div className="hero__stat-divider" />
+            <div className="hero__stat">
+              <span className="hero__stat-num">Rp3,106T</span>
+              <span className="hero__stat-label">State Budget 2024</span>
+            </div>
+            <div className="hero__stat-divider" />
+            <div className="hero__stat">
+              <span className="hero__stat-num">4 Tools</span>
+              <span className="hero__stat-label">To engage &amp; learn</span>
+            </div>
           </div>
         </div>
 
@@ -57,94 +88,186 @@ export default function LandingPage() {
           </div>
           <div className="hero__card hero__card--bottom">
             <span className="hero__card-num">+2.3M</span>
-            <span className="hero__card-label">Wajib Pajak Baru 2025</span>
+            <span className="hero__card-label">New Taxpayers 2025</span>
           </div>
         </div>
       </section>
 
-      {/* FITUR */}
+      {/* PROBLEM STATEMENT */}
+      <section className="problem">
+        <div className="problem__inner">
+          <span className="section-eyebrow">Why it matters</span>
+          <h2 className="section-title">Indonesia's Tax Gap Is Real</h2>
+          <p className="section-sub">
+            Low tax morale costs the country billions every year. TaxVoice bridges
+            the gap between citizens and their government through education,
+            participation, and transparency.
+          </p>
+          <div className="problem__cards">
+            <div className="problem__card">
+              <span className="problem__card-num">10.4%</span>
+              <span className="problem__card-title">Tax-to-GDP Ratio</span>
+              <span className="problem__card-sub">Below the 15% minimum recommended by IMF for development</span>
+            </div>
+            <div className="problem__card">
+              <span className="problem__card-num">Rp340T</span>
+              <span className="problem__card-title">Estimated Tax Gap</span>
+              <span className="problem__card-sub">Annual revenue lost due to low compliance and awareness</span>
+            </div>
+            <div className="problem__card">
+              <span className="problem__card-num">67%</span>
+              <span className="problem__card-title">Uninformed Citizens</span>
+              <span className="problem__card-sub">Of taxpayers are unsure where their tax money actually goes</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES */}
       <section className="features" id="features">
+        <span className="section-eyebrow">Platform features</span>
+        <h2 className="section-title">Everything you need to engage</h2>
+        <p className="section-sub">Four tools designed to educate, simulate, and connect citizens with public finance.</p>
         <div className="features__grid">
           <div className="feature-card">
             <div className="feature-card__icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
             </div>
-            <h3>Simulate the Budget</h3>
-            <p>Explore and allocate the national budget in our interactive simulator.</p>
+            <span className="feature-card__tag">Learn</span>
+            <h3>Knowledge Hub</h3>
+            <p>Articles on tax policy, budget transparency, and civic rights — in plain, accessible language.</p>
+            <Link to="/register" className="feature-card__link">Explore articles →</Link>
           </div>
           <div className="feature-card">
             <div className="feature-card__icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
             </div>
-            <h3>Track Your Impact</h3>
-            <p>See how your taxes contribute to education, healthcare, and infrastructure.</p>
+            <span className="feature-card__tag">Simulate</span>
+            <h3>Budget Simulator</h3>
+            <p>Allocate the national budget yourself and see how your choices score against real economic data.</p>
+            <Link to="/register" className="feature-card__link">Try simulator →</Link>
           </div>
           <div className="feature-card">
             <div className="feature-card__icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
             </div>
-            <h3>Join the Community</h3>
-            <p>Share your ideas and discuss public policies with fellow citizens.</p>
+            <span className="feature-card__tag">Participate</span>
+            <h3>Budget Preference</h3>
+            <p>Tell the government how you'd like your taxes spent — sector by sector, with real data behind it.</p>
+            <Link to="/register" className="feature-card__link">Share preference →</Link>
           </div>
-        </div>
-      </section>
-
-      {/* STATS */}
-      <section className="stats">
-        <p className="stats__label">See the Difference Your Taxes Make</p>
-        <div className="stats__grid">
-          <div className="stat-item">
-            <span className="stat-item__num">1,200</span>
-            <span className="stat-item__title">New Classrooms Built</span>
-            <span className="stat-item__sub">Improving education access.</span>
-          </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-item__num">2 Million</span>
-            <span className="stat-item__title">Patients Served</span>
-            <span className="stat-item__sub">Expanding healthcare coverage.</span>
-          </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-item__num">350 KM</span>
-            <span className="stat-item__title">Rural Roads Upgraded</span>
-            <span className="stat-item__sub">Connecting remote communities.</span>
+          <div className="feature-card" id="community">
+            <div className="feature-card__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <span className="feature-card__tag">Engage</span>
+            <h3>Community Forum</h3>
+            <p>Discuss public policy, share ideas, and connect with fellow citizens — transparently and openly.</p>
+            <Link to="/register" className="feature-card__link">Join discussion →</Link>
           </div>
         </div>
       </section>
 
       {/* HOW IT WORKS */}
       <section className="how">
-        <h2 className="section-title">How TaxVoice Works</h2>
+        <span className="section-eyebrow">How it works</span>
+        <h2 className="section-title">Three steps to civic engagement</h2>
         <div className="how__grid">
           <div className="how-step">
             <div className="how-step__num">1</div>
-            <h3>Pay & Contribute</h3>
-            <p>Easily fulfil your tax obligations and make symbolic preferences.</p>
+            <h3>Learn</h3>
+            <p>Read articles and explore real budget and tax data from verified sources.</p>
           </div>
+          <div className="how-step__arrow">→</div>
           <div className="how-step">
             <div className="how-step__num">2</div>
-            <h3>Learn & Simulate</h3>
-            <p>Understand budget allocations and try your own scenarios.</p>
+            <h3>Simulate</h3>
+            <p>Try your own budget allocation and get scored against optimal economic models.</p>
           </div>
+          <div className="how-step__arrow">→</div>
           <div className="how-step">
             <div className="how-step__num">3</div>
-            <h3>Track & Engage</h3>
-            <p>See real-time impact and join in meaningful discussions.</p>
+            <h3>Engage</h3>
+            <p>Share your preferences and join community discussions on public policy.</p>
           </div>
         </div>
       </section>
 
-      {/* TESTIMONIAL */}
-      <section className="testimonial">
-        <div className="testimonial__card">
-          <div className="testimonial__avatar">A</div>
-          <div className="testimonial__body">
+      {/* IMPACT DATA */}
+      <section className="impact" id="impact">
+        <span className="section-eyebrow">Real impact data</span>
+        <h2 className="section-title">Where your taxes go</h2>
+        <p className="section-sub">Indonesia's 2024 State Budget — verified public data from Kemenkeu &amp; BPS.</p>
+        <div className="impact__grid">
+          <div className="impact__card">
+            <span className="impact__card-num">20%</span>
+            <span className="impact__card-title">Education</span>
+            <span className="impact__card-sub">Mandatory allocation per UUD 1945</span>
+            <span className="impact__card-source">Kemenkeu 2024</span>
+          </div>
+          <div className="impact__card">
+            <span className="impact__card-num">Rp187T</span>
+            <span className="impact__card-title">Infrastructure</span>
+            <span className="impact__card-sub">Roads, ports, and connectivity</span>
+            <span className="impact__card-source">APBN 2024</span>
+          </div>
+          <div className="impact__card">
+            <span className="impact__card-num">Rp186T</span>
+            <span className="impact__card-title">Social Protection</span>
+            <span className="impact__card-sub">PKH, BPNT, and social programs</span>
+            <span className="impact__card-source">APBN 2024</span>
+          </div>
+          <div className="impact__card">
+            <span className="impact__card-num">Rp144T</span>
+            <span className="impact__card-title">Healthcare</span>
+            <span className="impact__card-sub">JKN, hospitals, and public health</span>
+            <span className="impact__card-source">APBN 2024</span>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="testimonials">
+        <span className="section-eyebrow">Community voices</span>
+        <h2 className="section-title">What users are saying</h2>
+        <div className="testimonials__grid">
+          <div className="testimonial__card">
             <p className="testimonial__quote">
               "TaxVoice makes me feel connected to where my money goes.
-              I can see the real benefits of paying taxes."
+              I can finally see the real benefits of paying taxes."
             </p>
-            <p className="testimonial__author">— <strong>Andi</strong>, Small Business Owner</p>
+            <div className="testimonial__author">
+              <div className="testimonial__avatar">A</div>
+              <div>
+                <p className="testimonial__name">Andi</p>
+                <p className="testimonial__role">Small Business Owner</p>
+              </div>
+            </div>
+          </div>
+          <div className="testimonial__card">
+            <p className="testimonial__quote">
+              "The simulator helped me understand why budget allocation is so
+              complex — and my score improved every time I tried!"
+            </p>
+            <div className="testimonial__author">
+              <div className="testimonial__avatar">S</div>
+              <div>
+                <p className="testimonial__name">Siti</p>
+                <p className="testimonial__role">University Student</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -152,18 +275,20 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="cta">
         <h2>Ready to Make an Impact?</h2>
-        <p>Join thousands of Indonesians in creating a better future today.</p>
-        <Link to="/register" className="btn-primary btn-primary--lg">Sign Up Now</Link>
+        <p>Join Indonesians in building a more transparent, accountable country.</p>
+        <Link to="/register" className="btn-primary-dark btn-primary-dark--lg">Sign Up — It's Free</Link>
       </section>
 
       {/* FOOTER */}
       <footer className="footer">
+        <div className="footer__brand">TaxVoice</div>
         <nav className="footer__nav">
           <a href="#">About</a>
           <a href="#">FAQ</a>
           <a href="#">Privacy Policy</a>
           <a href="#">Contact Us</a>
         </nav>
+        <p className="footer__copy">© 2025 TaxVoice. Universitas Bengkulu.</p>
       </footer>
 
     </div>
