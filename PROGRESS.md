@@ -16,84 +16,94 @@
 ---
 
 ## 📍 Status Saat Ini
-**Fase 3 — Preference Input & Simulator | Hari 29**
-> Siap memulai: Buat halaman /pay-taxes dengan 5 slider per sektor
+**Fase 4 — Community Forum | Hari 43**
+> Siap memulai: Buat tabel forum_posts & forum_replies di Supabase, aktifkan RLS
 
 ---
 
 ## ✅ Yang Sudah Selesai
 
-### Hari 1-4 — Environment & Boilerplate
+### Fase 1: Fondasi (Hari 1-14) ✅ SELESAI
 - [x] Install Node.js, VS Code, ekstensi (ESLint, Prettier, Tailwind IntelliSense, ES7+ Snippets)
 - [x] Buat akun GitHub, Supabase, Vercel
 - [x] Buat project React dengan Vite: `npm create vite@latest taxvoice -- --template react`
-- [x] Install dependencies:
-```
-  @supabase/supabase-js
-  react-router-dom
-  recharts
-  react-hook-form
-  react-markdown
-```
+- [x] Install dependencies: `@supabase/supabase-js`, `react-router-dom`, `recharts`, `react-hook-form`, `react-markdown`
 - [x] Setup Tailwind v4 via `@tailwindcss/vite` plugin (BUKAN tailwind.config.js — ini penting!)
-
-### Hari 5-7 — Komponen Dasar & Layout
 - [x] Buat `src/components/Sidebar.jsx` — sidebar navigasi fixed dengan NavLink aktif
 - [x] Buat `src/components/Layout.jsx` — wrapper dengan Outlet untuk nested routes
+- [x] Buat `src/components/ProtectedRoute.jsx` — proteksi route, cek session Supabase
 - [x] Update `src/App.jsx` — routing lengkap semua halaman
-- [x] Update `src/index.css` — global styles + landing page styles
+- [x] Update `src/index.css` — global styles + semua page CSS
 - [x] Buat semua page stubs di `src/pages/`
 - [x] Buat `src/pages/LandingPage.jsx` — landing page lengkap dengan semua section
-
-### Hari 8-12 — Supabase, Auth & Deploy
+- [x] Buat `src/pages/LoginPage.jsx` — form login lengkap dengan error handling
+- [x] Buat `src/pages/RegisterPage.jsx` — form register lengkap (nama, email, password)
 - [x] Buat Supabase project (region: Southeast Asia - Singapore)
 - [x] Ambil API keys → simpan di `.env.local`
 - [x] Isi `src/lib/supabase.js` dengan createClient
 - [x] Buat tabel `users` di Supabase via SQL Editor
 - [x] Nonaktifkan "Confirm email" di Supabase Auth
 - [x] Buat trigger otomatis `on_auth_user_created` + function `handle_new_user()`
-- [x] Buat `src/pages/LoginPage.jsx` — form login lengkap dengan error handling
-- [x] Buat `src/pages/RegisterPage.jsx` — form register lengkap (nama, email, password)
-- [x] Buat `src/components/ProtectedRoute.jsx` — proteksi route authenticated
-- [x] Update `src/App.jsx` — wrap Layout dengan ProtectedRoute
 - [x] Deploy ke Vercel + tambah environment variables di Vercel dashboard
 - [x] Test end-to-end: register → login → proteksi route → semua berhasil ✅
 
-### Hari 15-17 — Tabel Articles & Data Dummy
+### Fase 2: Knowledge Hub & Dashboard (Hari 15-28) ✅ SELESAI
 - [x] Buat tabel `articles` di Supabase via SQL Editor
 - [x] Aktifkan RLS + buat policy `articles_public_read` (SELECT for all)
 - [x] Input 10 artikel dummy dalam bahasa Inggris dengan kategori:
-  - tax, budget, transparency, development, guide, education
-
-### Hari 18-20 — Halaman /knowledge
+      tax, budget, transparency, development, guide, education
 - [x] Buat `src/pages/KnowledgePage.jsx`:
-  - Fetch artikel dari Supabase (tanpa kolom content)
-  - Filter by category: All, tax, budget, transparency, development, guide, education
-  - Search by title (client-side filtering)
-  - Card grid responsive dengan komponen ArticleCard
-  - Loading spinner & empty state
-- [x] Tambah CSS knowledge page di `src/index.css`
+      - Fetch artikel dari Supabase (tanpa kolom content)
+      - Filter by category: All, tax, budget, transparency, development, guide, education
+      - Search by title (client-side filtering)
+      - Card grid responsive dengan komponen ArticleCard
+      - Loading spinner & empty state
+- [x] Buat `src/pages/KnowledgeDetailPage.jsx`:
+      - Fetch artikel by ID dari URL params (useParams)
+      - Redirect ke /knowledge jika artikel tidak ditemukan
+      - Render konten Markdown dengan ReactMarkdown
+      - Tombol back ke /knowledge
+- [x] Buat `src/pages/ImpactPage.jsx`:
+      - 4 Stat Cards: State Budget, Tax Revenue, Tax Ratio, Registered Taxpayers
+      - PieChart: State Budget Allocation 2024 by sector
+      - BarChart: Tax Ratio by Country (Indonesia di-highlight merah)
+      - LineChart: Tax Revenue Target vs Realization 2019-2024
+      - Semua chart menggunakan Recharts + ResponsiveContainer
 - [x] Fix bug: `activeCategory` default value `'Semua'` → `'All'`
-- [x] Fix bug: `categoryColors` key diupdate dari bahasa Indonesia ke Inggris (tax, budget, dll)
+- [x] Fix bug: `categoryColors` key diupdate dari bahasa Indonesia ke Inggris
 - [x] Fix bug: label `menit baca` → `min read`
 
-### Hari 21-22 — Halaman /knowledge/:id
-- [x] Install `react-markdown`
-- [x] Buat `src/pages/KnowledgeDetailPage.jsx`:
-  - Fetch artikel by ID dari URL params (`useParams`)
-  - Redirect ke /knowledge jika artikel tidak ditemukan
-  - Render konten Markdown dengan ReactMarkdown
-  - Tombol back ke /knowledge
-- [x] Tambah CSS detail page + Markdown styling di `src/index.css`
-
-### Hari 23-25 — Halaman /impact
-- [x] Buat `src/pages/ImpactPage.jsx`:
-  - 4 Stat Cards: State Budget, Tax Revenue, Tax Ratio, Registered Taxpayers
-  - PieChart: State Budget Allocation 2024 by sector
-  - BarChart: Tax Ratio by Country (Indonesia di-highlight merah)
-  - LineChart: Tax Revenue Target vs Realization 2019-2024
-  - Semua chart menggunakan Recharts + ResponsiveContainer
-- [x] Tambah CSS impact page di `src/index.css`
+### Fase 3: Preference Input & Simulator (Hari 29-42) ✅ SELESAI
+- [x] Buat `src/pages/PayTaxesPage.jsx`:
+      - 5 slider alokasi anggaran per sektor
+      - Slider terkunci: total tidak bisa melebihi 100%
+      - max slider selalu 100 (posisi visual konsisten 0-100)
+      - Sektor lain TIDAK bergerak saat satu sektor digeser
+      - Feedback "Max reached — reduce another sector first" muncul saat remaining = 0
+      - Real-time pie chart preview alokasi
+      - Submit preferensi ke Supabase dengan upsert (onConflict: 'user_id')
+      - State saved/error handling
+- [x] Buat tabel `preferences` di Supabase:
+      - Kolom: id, user_id (UNIQUE FK), education_pct, health_pct,
+        infrastructure_pct, defense_pct, social_pct, created_at
+      - RLS aktif — policy "Users can manage own preferences" (ALL, auth.uid() = user_id)
+- [x] Buat `src/pages/SimulatorPage.jsx`:
+      - Slider alokasi 5 sektor (mekanisme sama dengan PayTaxesPage)
+      - Tombol "Run Simulation" — trigger kalkulasi
+      - Formula scoring optimal point:
+        score = max(0, 100 - |alokasi - ideal| × penalty)
+        penalty: ×2 jika deviasi ≤5% | ×3.5 jika ≤10% | ×5 jika >10%
+      - Overall score = weighted average semua sektor
+        bobot: Education 25% | Health 20% | Infrastructure 20% | Defense 15% | Social 20%
+      - Grade A/B/C/D/F per sektor berdasarkan skor
+      - Penjelasan dinamis per sektor (low/ideal/high), threshold ±7% dari ideal
+      - Tab system: Overview, Charts, Analysis, References
+      - Overview: card per sektor dengan grade + insight text
+      - Charts: Radar chart, Bar chart (alokasi vs ideal), Line chart tren
+      - Line chart tren hanya muncul setelah run ≥2 kali
+      - Analysis: formula penjelasan + tabel breakdown per sektor
+      - References: 8 sumber ilmiah (UNESCO, WHO, IMF, World Bank, SIPRI, ADB, BPS, dll)
+      - Riwayat simulasi disimpan di state (max 5 run terakhir)
 
 ---
 
@@ -116,8 +126,8 @@ taxvoice/
 │   │   ├── ImpactPage.jsx          ← selesai, 4 stat cards + 3 charts
 │   │   ├── KnowledgePage.jsx       ← selesai, card grid + search + filter
 │   │   ├── KnowledgeDetailPage.jsx ← selesai, detail artikel + markdown
-│   │   ├── PayTaxesPage.jsx        ← stub kosong
-│   │   ├── SimulatorPage.jsx       ← stub kosong
+│   │   ├── PayTaxesPage.jsx        ← selesai, 5 slider + pie chart + upsert Supabase
+│   │   ├── SimulatorPage.jsx       ← selesai, scoring + 4 visualisasi + references
 │   │   ├── CommunityPage.jsx       ← stub kosong
 │   │   ├── CommunityDetailPage.jsx ← stub kosong
 │   │   ├── ProfilePage.jsx         ← stub kosong
@@ -142,15 +152,15 @@ Public (tanpa sidebar):
   /register   → RegisterPage
 
 Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
-  /pay-taxes          → PayTaxesPage
-  /simulator          → SimulatorPage
-  /knowledge          → KnowledgePage
-  /knowledge/:id      → KnowledgeDetailPage
-  /community          → CommunityPage
-  /community/:id      → CommunityDetailPage
-  /impact             → ImpactPage
-  /profile            → ProfilePage
-  *                   → NotFoundPage
+  /pay-taxes          → PayTaxesPage         ✅ selesai
+  /simulator          → SimulatorPage        ✅ selesai
+  /knowledge          → KnowledgePage        ✅ selesai
+  /knowledge/:id      → KnowledgeDetailPage  ✅ selesai
+  /community          → CommunityPage        🔲 stub kosong
+  /community/:id      → CommunityDetailPage  🔲 stub kosong
+  /impact             → ImpactPage           ✅ selesai
+  /profile            → ProfilePage          🔲 stub kosong
+  *                   → NotFoundPage         ✅ selesai
 ```
 
 ---
@@ -179,7 +189,7 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 
 ## 🗄️ Skema Database Supabase
 
-### Tabel `users` ✅ SUDAH DIBUAT
+### Tabel `users` ✅
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | REFERENCES auth.users(id) ON DELETE CASCADE |
@@ -189,7 +199,7 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 | annual_income_dummy | BIGINT | Default 0, untuk simulasi |
 | created_at | TIMESTAMPTZ | Default now() |
 
-### Tabel `articles` ✅ SUDAH DIBUAT
+### Tabel `articles` ✅
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
@@ -202,23 +212,21 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 
 **RLS**: Aktif — policy `articles_public_read` mengizinkan SELECT untuk semua (tanpa login)
 
-### Trigger & Function ✅ SUDAH DIBUAT
-- **Function**: `public.handle_new_user()` — menyalin data dari Auth ke tabel users
-- **Trigger**: `on_auth_user_created` — jalan otomatis AFTER INSERT ON auth.users
-
-### Tabel `preferences` (Belum dibuat — Fase 3)
+### Tabel `preferences` ✅
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
-| user_id | UUID FK | → users |
-| education_pct | INTEGER | 0-100 |
-| health_pct | INTEGER | 0-100 |
-| infrastructure_pct | INTEGER | 0-100 |
-| defense_pct | INTEGER | 0-100 |
-| social_pct | INTEGER | 0-100 |
+| user_id | UUID UNIQUE FK | → users, ON DELETE CASCADE |
+| education_pct | INTEGER | Default 0 |
+| health_pct | INTEGER | Default 0 |
+| infrastructure_pct | INTEGER | Default 0 |
+| defense_pct | INTEGER | Default 0 |
+| social_pct | INTEGER | Default 0 |
 | created_at | TIMESTAMPTZ | Default now() |
 
-### Tabel `forum_posts` (Belum dibuat — Fase 4)
+**RLS**: Aktif — policy "Users can manage own preferences" (ALL operations, auth.uid() = user_id)
+
+### Tabel `forum_posts` 🔲 Belum dibuat
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
@@ -228,7 +236,7 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 | likes_count | INTEGER | Default 0 |
 | created_at | TIMESTAMPTZ | Default now() |
 
-### Tabel `forum_replies` (Belum dibuat — Fase 4)
+### Tabel `forum_replies` 🔲 Belum dibuat
 | Kolom | Tipe | Keterangan |
 |-------|------|------------|
 | id | UUID PK | Auto-generated |
@@ -236,6 +244,29 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 | user_id | UUID FK | → users |
 | content | TEXT | Isi balasan |
 | created_at | TIMESTAMPTZ | Default now() |
+
+### Trigger & Function ✅
+- **Function**: `public.handle_new_user()` — menyalin data dari Auth ke tabel users
+- **Trigger**: `on_auth_user_created` — jalan otomatis AFTER INSERT ON auth.users
+
+---
+
+## 💡 Keputusan Desain
+
+- **Bahasa**: Seluruh UI dan konten dalam bahasa Inggris
+- **Sidebar** pakai `position: fixed` — tetap terlihat saat scroll
+- **Main content** pakai `margin-left: 220px` untuk kompensasi sidebar fixed
+- **Landing page** tidak pakai sidebar — route publik berdiri sendiri
+- **Ilustrasi hero** menggunakan SVG custom — lebih ringan & scalable
+- **CSS custom** ditulis di `src/index.css` dengan class naming BEM
+- **Confirm email dimatikan** saat development — aktifkan sebelum launch
+- **UI polish ditunda** ke Fase 5 — fokus dulu ke fungsionalitas
+- **Artikel** disimpan dalam format Markdown di kolom `content`
+- **Chart data** masih dummy — akan diganti data real di Fase 5
+- **RLS** diaktifkan di semua tabel — articles: public read, tabel lain: authenticated only
+- **Slider alokasi** max selalu 100 (posisi visual konsisten), sektor lain tidak bergerak saat digeser, nilai di-clamp di handleSlider
+- **Upsert preferences** pakai `onConflict: 'user_id'` — satu user hanya boleh punya satu baris preferensi
+- **Simulator history** disimpan di state lokal (bukan DB) — max 5 run, hanya untuk line chart tren dalam sesi aktif
 
 ---
 
@@ -283,17 +314,11 @@ Ada session → tampilkan Layout + halaman ✅
 
 ### Fase 1: Fondasi (Hari 1-14) ✅ SELESAI
 ### Fase 2: Knowledge Hub & Dashboard (Hari 15-28) ✅ SELESAI
+### Fase 3: Preference Input & Simulator (Hari 29-42) ✅ SELESAI
 
-### Fase 3: Preference Input & Simulator (Hari 29-42) ← SEKARANG
-- [ ] Hari 29-31: Halaman /pay-taxes, 5 slider dengan useState
-- [ ] Hari 32-33: Validasi total=100%, pie chart preview real-time
-- [ ] Hari 34-35: Tabel preferences di Supabase, submit ke DB
-- [ ] Hari 36-38: Halaman /simulator, slider alokasi 5 sektor
-- [ ] Hari 39-42: Formula dampak dummy, tampilkan skor & chart hasil simulasi
-
-### Fase 4: Community Forum (Hari 43-56)
-- [ ] Hari 43-45: Tabel forum_posts & forum_replies, aktifkan RLS
-- [ ] Hari 46-48: Halaman /community (list post)
+### Fase 4: Community Forum (Hari 43-56) ← SEKARANG
+- [ ] Hari 43-45: Buat tabel `forum_posts` & `forum_replies`, aktifkan RLS
+- [ ] Hari 46-48: Halaman /community (list post + search)
 - [ ] Hari 49-51: Form create post, submit ke Supabase
 - [ ] Hari 52-54: Halaman /community/:id (thread + replies)
 - [ ] Hari 55-56: Fitur like, proteksi route login
@@ -330,22 +355,7 @@ VITE_SUPABASE_ANON_KEY=eyJhbGci...
 | Artikel tidak muncul di /knowledge | `activeCategory` default masih `'Semua'` bukan `'All'` | Ganti `useState('Semua')` → `useState('All')` |
 | Badge warna artikel semua abu-abu | Key `categoryColors` masih bahasa Indonesia | Update key ke: tax, budget, transparency, development, guide, education |
 | Label durasi masih Indonesia | `menit baca` tidak diupdate | Ganti ke `min read` |
-
----
-
-## 📝 Keputusan Desain
-
-- **Bahasa**: Seluruh UI dan konten dalam bahasa Inggris
-- **Sidebar** pakai `position: fixed` — tetap terlihat saat scroll
-- **Main content** pakai `margin-left: 220px` untuk kompensasi sidebar fixed
-- **Landing page** tidak pakai sidebar — route publik berdiri sendiri
-- **Ilustrasi hero** menggunakan SVG custom — lebih ringan & scalable
-- **CSS custom** ditulis di `src/index.css` dengan class naming BEM
-- **Confirm email dimatikan** saat development — aktifkan sebelum launch
-- **UI polish ditunda** ke Fase 5 — fokus dulu ke fungsionalitas
-- **Artikel** disimpan dalam format Markdown di kolom `content`
-- **Chart data** masih dummy — akan diganti data real di Fase 5
-- **RLS** diaktifkan di semua tabel — articles: public read, tabel lain: authenticated only
+| Slider sektor lain ikut bergerak | `max` slider dinamis menggeser track sektor lain | Ganti `max` jadi tetap 100, clamp nilai di `handleSlider` |
 
 ---
 
@@ -354,6 +364,6 @@ VITE_SUPABASE_ANON_KEY=eyJhbGci...
 1. Buka chat baru dengan Claude
 2. Tulis: *"Ini progress project TaxVoice saya:"*
 3. Paste seluruh isi file PROGRESS.md ini
-4. Lanjutkan dengan: *"Lanjut ke Fase 3 ya"*
+4. Lanjutkan dengan: *"Lanjut ke Fase 4 ya"*
 
 Claude akan langsung memahami konteks penuh tanpa perlu dijelaskan dari awal.
