@@ -41,7 +41,7 @@ export default function CommunityDetailPage() {
     const { data, error } = await supabase
       .from('forum_posts')
       .select(`
-        id, title, content, likes_count, created_at, user_id,
+        id, title, content, created_at, user_id,
         users (full_name)
       `)
       .eq('id', id)
