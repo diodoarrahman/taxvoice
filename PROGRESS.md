@@ -16,8 +16,8 @@
 ---
 
 ## 📍 Status Saat Ini
-**Fase 5 — Polish & Presentasi | Hari 57**
-> Siap memulai: Landing Page lengkap & menarik
+**Fase 5 — Polish & Presentasi | Hari 62**
+> Selesai: Landing page polish + audit UI (a11y, mobile nav, performa)
 
 ---
 
@@ -155,6 +155,27 @@
       - Stat cards: total Posts & Replies
       - Tombol Go to Community Forum
       - Tombol Sign Out → supabase.auth.signOut() → redirect /login
+      - **Upload foto profil** ke Supabase Storage bucket `avatars`
+      - File validation: max 2MB, type jpeg/png/webp/gif
+      - Real-time preview foto setelah upload (URL dengan timestamp agar cache tidak stale)
+      - Badge tier berdasarkan jumlah artikel dibaca & pajak yang dibayar (Tax Curious → Tax Soulmate)
+      - Contribution arc chart (SVG gauge) menampilkan perbandingan pajak user vs rata-rata nasional
+- [x] Buat `src/components/UserAvatar.jsx`:
+      - Menampilkan foto profil dari Supabase Storage
+      - Fallback ke inisial nama jika foto tidak ada / gagal load
+      - Self-user mendapat URL dengan versioning (real-time setelah upload)
+      - User lain mendapat URL deterministik (tanpa versioning)
+- [x] Upvote sistem di Community:
+      - Upvote tombol di CommunityPage (list post) dengan optimistic update
+      - Upvote tombol di CommunityDetailPage (post detail)
+      - Upvote tombol per reply di CommunityDetailPage
+      - Status like real-time dari tabel post_likes / reply_likes
+- [x] Rename label navigasi sidebar:
+      - "Pay Taxes" → "Target Your Tax"
+      - "Budget" → "Reallocate Budget"
+      - "Knowledge" → "Understand Tax"
+      - "Community" → "Share Your Voice"
+      - "Impact" → "Transparency Dashboard"
 - [x] Tambah route `/community/new` di App.jsx (SEBELUM `/community/:id`)
 - [x] Buat `vercel.json` di root project untuk fix 404 saat refresh di production:
       { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
@@ -230,7 +251,7 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 
 | Teknologi | Versi | Catatan |
 |-----------|-------|---------|
-| React | 18.x | UI Framework |
+| React | 19.x | UI Framework |
 | Vite | 8.x | Build tool (bukan CRA) |
 | Tailwind CSS | v4 | Via `@tailwindcss/vite` plugin — TANPA tailwind.config.js |
 | React Router | v6 | Nested routes untuk Layout |
@@ -348,6 +369,10 @@ Authenticated (dengan sidebar via Layout, dilindungi ProtectedRoute):
 - **Likes dihitung dari tabel post_likes** — bukan cached column, agar akurat dan tidak race condition
 - **Route /community/new** harus didefinisikan SEBELUM /community/:id di App.jsx
 - **vercel.json** wajib ada untuk SPA — redirect semua URL ke index.html agar refresh tidak 404
+- **Font Figtree** dipakai sebagai ganti Inter — lebih distinctive untuk produk civic/institutional
+- **Mobile navigation** ditambahkan di Fase 5 — hamburger + overlay sidebar untuk viewport ≤767px
+- **Emoji icon dihindari** di stat cards dan sektor — diganti SVG konsisten agar cross-platform
+- **focus-visible global** ditambahkan — keyboard navigation kini terlihat di seluruh aplikasi
 
 ---
 
@@ -399,8 +424,8 @@ Ada session → tampilkan Layout + halaman ✅
 ### Fase 4: Community Forum (Hari 43-56) ✅ SELESAI
 
 ### Fase 5: Polish & Presentasi (Hari 57-73) ← SEKARANG
-- [ ] Hari 57-59: Landing Page lengkap & menarik
-- [ ] Hari 60-62: Audit UI seluruh halaman
+- [x] Hari 57-59: Landing Page lengkap & menarik ✅
+- [x] Hari 60-62: Audit UI seluruh halaman — a11y, performa, mobile nav, font ✅
 - [ ] Hari 63-65: Isi semua data dummy lengkap
 - [ ] Hari 66-68: Testing menyeluruh & fix bugs
 - [ ] Hari 69-71: Persiapkan skrip demo
@@ -436,6 +461,10 @@ VITE_SUPABASE_ANON_KEY=eyJhbGci...
 | Post tidak bisa diklik setelah drop kolom likes_count | `fetchPost()` di CommunityDetailPage masih select `likes_count` | Hapus `likes_count` dari select query di fetchPost() |
 | 404 saat refresh halaman di production (Vercel) | Vercel cari file fisik sesuai URL, tidak ada → 404 | Buat `vercel.json` dengan rewrite semua URL ke index.html |
 | `CreatePostPage is not defined` | Komponen dipakai di App.jsx sebelum dibuat filenya | Buat stub dulu `CreatePostPage.jsx` lalu import di App.jsx |
+| Avatar foto tidak update setelah upload | Browser cache URL lama → foto lama terus muncul | Tambah `?t=Date.now()` pada URL avatar milik self di UserAvatar |
+| Sidebar tidak ada di mobile | Sidebar fixed 220px tidak punya hamburger toggle | Tambah `mobile-nav-bar` + overlay + `sidebar--open` class via Layout state |
+| Text muted terlalu pucat (#94a3b8) | Kontras 2.9:1 di bawah WCAG AA minimum 4.5:1 | Ganti semua `#94a3b8`, `#888`, `#aaa` → `#64748b` (kontras 4.75:1) |
+| Keyboard tidak bisa navigasi community cards | `<div onClick>` tidak bisa difokus via Tab | Tambah `role="button"`, `tabIndex={0}`, `onKeyDown` handler |
 
 ---
 
