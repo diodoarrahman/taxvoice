@@ -215,10 +215,14 @@ export default function CommunityPage() {
           {displayedPosts.map(post => {
             const liked = likedPosts.has(post.id)
             return (
-              <div
+              <article
                 key={post.id}
                 className="community-card"
                 onClick={() => navigate(`/community/${post.id}`)}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate(`/community/${post.id}`) } }}
+                role="button"
+                tabIndex={0}
+                aria-label={`Read post: ${post.title}`}
               >
                 <div className="community-card-body">
                   <h2 className="community-card-title">{post.title}</h2>
@@ -248,7 +252,7 @@ export default function CommunityPage() {
                     <span className="community-read-more">Read more →</span>
                   </div>
                 </div>
-              </div>
+              </article>
             )
           })}
         </div>

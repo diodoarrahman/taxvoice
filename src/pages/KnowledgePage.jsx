@@ -103,7 +103,7 @@ function ArticleCard({ article }) {
   return (
     <Link to={`/knowledge/${article.id}`} className="article-card">
       <div className="article-thumbnail">
-        <img src={article.thumbnail_url} alt={article.title} />
+        <img src={article.thumbnail_url} alt={article.title} loading="lazy" decoding="async" />
         <span
           className="article-category-badge"
           style={{ backgroundColor: categoryColors[article.category] || '#6b7280' }}

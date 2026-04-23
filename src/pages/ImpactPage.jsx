@@ -43,10 +43,26 @@ export default function ImpactPage() {
 
       {/* Stats Cards */}
       <div className="stats-grid">
-        <StatCard label="State Budget 2024" value="IDR 3,325 T" icon="🏛️" color="#2563eb" />
-        <StatCard label="Tax Revenue 2024" value="IDR 1,932 T" icon="💰" color="#059669" />
-        <StatCard label="Indonesia Tax Ratio" value="~10%" icon="📊" color="#7c3aed" />
-        <StatCard label="Registered Taxpayers" value="69 Million" icon="👥" color="#d97706" />
+        <StatCard label="State Budget 2024" value="IDR 3,325 T" color="#2563eb" icon={
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 22V9l9-7 9 7v13" /><path d="M9 22V12h6v10" />
+          </svg>
+        } />
+        <StatCard label="Tax Revenue 2024" value="IDR 1,932 T" color="#059669" icon={
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" /><path d="M12 6v2m0 8v2M8 10c0-1.1.9-2 2-2h4a2 2 0 0 1 0 4h-4a2 2 0 0 0 0 4h4a2 2 0 0 0 2-2" />
+          </svg>
+        } />
+        <StatCard label="Indonesia Tax Ratio" value="~10%" color="#7c3aed" icon={
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+        } />
+        <StatCard label="Registered Taxpayers" value="69 Million" color="#d97706" icon={
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+        } />
       </div>
 
       {/* Charts */}
@@ -136,8 +152,8 @@ export default function ImpactPage() {
 
 function StatCard({ label, value, icon, color }) {
   return (
-    <div className="stat-card" style={{ borderTop: `4px solid ${color}` }}>
-      <div className="stat-icon">{icon}</div>
+    <div className="stat-card">
+      <div className="stat-icon" style={{ color }}>{icon}</div>
       <div className="stat-info">
         <p className="stat-value" style={{ color }}>{value}</p>
         <p className="stat-label">{label}</p>

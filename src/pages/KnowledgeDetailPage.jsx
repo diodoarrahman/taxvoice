@@ -58,7 +58,7 @@ export default function KnowledgeDetailPage() {
 
       {/* Thumbnail */}
       <div className="detail-thumbnail">
-        <img src={article.thumbnail_url} alt={article.title} />
+        <img src={article.thumbnail_url} alt={article.title} loading="lazy" decoding="async" />
       </div>
 
       {/* Article Header */}
