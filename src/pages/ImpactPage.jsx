@@ -37,7 +37,7 @@ export default function ImpactPage() {
     <div className="impact-page">
       {/* Header */}
       <div className="impact-header">
-        <h1>Tax Impact Dashboard</h1>
+        <h1>Transparency Dashboard</h1>
         <p>Visualizing Indonesia's tax data and public finance</p>
       </div>
 

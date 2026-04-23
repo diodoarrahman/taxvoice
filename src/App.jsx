@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
 import Layout from './components/Layout'
 
 // Pages - semua masih stub, akan diisi satu per satu
@@ -19,6 +20,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 export default function App() {
   return (
+    <AuthProvider>
     <BrowserRouter>
       <Routes>
         {/* Public routes - tanpa sidebar */}
@@ -46,5 +48,6 @@ export default function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
+    </AuthProvider>
   )
 }

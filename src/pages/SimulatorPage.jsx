@@ -265,7 +265,7 @@ export default function SimulatorPage() {
 
       {/* ── Header ── */}
       <div className="sim-header">
-        <h1 className="sim-title">Budget Impact Simulator</h1>
+        <h1 className="sim-title">Reallocate Budget</h1>
         <p className="sim-sub">
           Allocate the state budget across 5 sectors, then run the simulation to see
           projected impacts, scores, and evidence-based analysis of your choices.

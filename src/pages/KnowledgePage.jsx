@@ -39,7 +39,7 @@ export default function KnowledgePage() {
     <div className="knowledge-page">
       {/* Header */}
       <div className="knowledge-header">
-        <h1>Knowledge Hub</h1>
+        <h1>Understand Tax</h1>
         <p>Learn about taxation and public finance in a clear and accessible way</p>
       </div>
 
