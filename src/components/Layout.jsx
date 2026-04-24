@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
+import LogoMark from './LogoMark'
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -19,7 +20,7 @@ export default function Layout() {
             <line x1="3" y1="18" x2="21" y2="18" />
           </svg>
         </button>
-        <span className="mobile-nav-logo">TaxVoice</span>
+        <span className="mobile-nav-logo"><LogoMark size={26} />TaxVoice</span>
         <div style={{ width: 36 }} />
       </div>
 

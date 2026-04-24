@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { getArticleThumbUrl } from '../lib/articleThumb'
 
 const CATEGORIES = ['All', 'tax', 'budget', 'transparency', 'development', 'guide', 'education']
 
@@ -43,39 +44,44 @@ const ThumbIcons = {
 }
 
 const categoryThumb = {
-  tax:          { bg: 'oklch(31% 0.18 260)', icon: ThumbIcons.tax },
-  budget:       { bg: 'oklch(29% 0.16 290)', icon: ThumbIcons.budget },
+  tax:          { bg: 'oklch(31% 0.18 260)', icon: ThumbIcons.tax          },
+  budget:       { bg: 'oklch(29% 0.16 290)', icon: ThumbIcons.budget       },
   transparency: { bg: 'oklch(28% 0.17 20)',  icon: ThumbIcons.transparency },
-  development:  { bg: 'oklch(33% 0.12 55)',  icon: ThumbIcons.development },
-  guide:        { bg: 'oklch(28% 0.14 300)', icon: ThumbIcons.guide },
-  education:    { bg: 'oklch(30% 0.12 168)', icon: ThumbIcons.education },
-  default:      { bg: 'oklch(28% 0.05 260)', icon: ThumbIcons.default },
+  development:  { bg: 'oklch(33% 0.12 55)',  icon: ThumbIcons.development  },
+  guide:        { bg: 'oklch(28% 0.14 300)', icon: ThumbIcons.guide        },
+  education:    { bg: 'oklch(30% 0.12 168)', icon: ThumbIcons.education    },
+  default:      { bg: 'oklch(28% 0.05 260)', icon: ThumbIcons.default      },
+}
+
+const categoryColors = {
+  tax: '#2563eb',
+  budget: '#7c3aed',
+  transparency: '#dc2626',
+  development: '#d97706',
+  guide: '#7c3aed',
+  education: '#059669',
 }
 
 export default function KnowledgePage() {
   const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true) // starts true; effect sets false when done
   const [activeCategory, setActiveCategory] = useState('All')
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    fetchArticles()
-  }, [])
-
-  async function fetchArticles() {
-    setLoading(true)
-    const { data, error } = await supabase
+    let cancelled = false
+    supabase
       .from('articles')
-      .select('id, title, category, thumbnail_url, read_time_min, created_at')
+      .select('id, title, category, read_time_min, created_at')
       .order('created_at', { ascending: false })
-
-    if (error) {
-      console.error('Error fetching articles:', error)
-    } else {
-      setArticles(data)
-    }
-    setLoading(false)
-  }
+      .then(({ data, error }) => {
+        if (cancelled) return
+        if (error) console.error('Error fetching articles:', error)
+        else setArticles(data)
+        setLoading(false)
+      })
+    return () => { cancelled = true }
+  }, [])
 
   const filtered = articles.filter(article => {
     const matchCategory = activeCategory === 'All' || article.category === activeCategory
@@ -85,13 +91,11 @@ export default function KnowledgePage() {
 
   return (
     <div className="knowledge-page">
-      {/* Header */}
       <div className="knowledge-header">
         <h1>Understand Tax</h1>
         <p>Learn about taxation and public finance in a clear and accessible way</p>
       </div>
 
-      {/* Search & Filter */}
       <div className="knowledge-controls">
         <input
           type="text"
@@ -113,7 +117,6 @@ export default function KnowledgePage() {
         </div>
       </div>
 
-      {/* Content */}
       {loading ? (
         <div className="knowledge-loading">
           <div className="spinner" />
@@ -134,20 +137,11 @@ export default function KnowledgePage() {
   )
 }
 
-const categoryColors = {
-  tax: '#2563eb',
-  budget: '#7c3aed',
-  transparency: '#dc2626',
-  development: '#d97706',
-  guide: '#7c3aed',
-  education: '#059669',
-}
-
-function ArticleThumbnail({ url, category, title }) {
-  const [imgError, setImgError] = useState(false)
+function ArticleThumbnail({ id, category, title }) {
   const thumb = categoryThumb[category] || categoryThumb.default
+  const [failed, setFailed] = useState(false)
 
-  if (!url || imgError) {
+  if (failed) {
     return (
       <div className="article-thumb-placeholder" style={{ backgroundColor: thumb.bg }}>
         <span className="article-thumb-svg">{thumb.icon}</span>
@@ -157,11 +151,10 @@ function ArticleThumbnail({ url, category, title }) {
 
   return (
     <img
-      src={url}
+      src={getArticleThumbUrl(id, category)}
       alt={title}
-      loading="lazy"
       decoding="async"
-      onError={() => setImgError(true)}
+      onError={() => setFailed(true)}
     />
   )
 }
@@ -174,7 +167,7 @@ function ArticleCard({ article }) {
   return (
     <Link to={`/knowledge/${article.id}`} className="article-card">
       <div className="article-thumbnail">
-        <ArticleThumbnail url={article.thumbnail_url} category={article.category} title={article.title} />
+        <ArticleThumbnail id={article.id} category={article.category} title={article.title} />
         <span
           className="article-category-badge"
           style={{ backgroundColor: categoryColors[article.category] || '#6b7280' }}

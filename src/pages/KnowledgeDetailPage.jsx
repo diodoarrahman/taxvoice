@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { supabase } from '../lib/supabase'
+import { getArticleThumbUrl } from '../lib/articleThumb'
 
 export default function KnowledgeDetailPage() {
   const { id } = useParams()
@@ -58,7 +59,11 @@ export default function KnowledgeDetailPage() {
 
       {/* Thumbnail */}
       <div className="detail-thumbnail">
-        <img src={article.thumbnail_url} alt={article.title} loading="lazy" decoding="async" />
+        <img
+          src={getArticleThumbUrl(article.id, article.category)}
+          alt={article.title}
+          decoding="async"
+        />
       </div>
 
       {/* Article Header */}

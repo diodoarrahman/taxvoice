@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import UserAvatar from './UserAvatar'
+import LogoMark from './LogoMark'
 
 const navItems = [
   {
@@ -75,13 +76,7 @@ export default function Sidebar({ isOpen, onClose }) {
     <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
       <div className="sidebar-logo">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <div className="logo-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
-            </svg>
-          </div>
+          <LogoMark size={32} />
           <span className="logo-text">TaxVoice</span>
         </div>
         <button className="sidebar-close-btn" onClick={onClose} aria-label="Close navigation menu">

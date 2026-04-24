@@ -91,10 +91,6 @@ body {
 }
 
 .logo-icon {
-  width: 32px;
-  height: 32px;
-  background: var(--color-primary);
-  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -287,6 +283,9 @@ body {
 }
 
 .landing-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 18px;
   font-weight: 700;
   color: #1e3a8a;
@@ -979,6 +978,9 @@ body {
 }
 
 .footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 16px;
   font-weight: 700;
   color: #fff;
@@ -3757,6 +3759,9 @@ body {
 }
 
 .mobile-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 1rem;
   font-weight: 700;
   color: var(--color-text);
@@ -3987,10 +3992,6 @@ body {
 }
 
 .auth-logo-icon {
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import LogoMark from '../components/LogoMark'
 
 export default function LandingPage() {
   return (
@@ -6,7 +7,7 @@ export default function LandingPage() {
 
       {/* NAVBAR */}
       <nav className="landing-nav">
-        <div className="landing-nav__logo">TaxVoice</div>
+        <div className="landing-nav__logo"><LogoMark size={28} />TaxVoice</div>
         <div className="landing-nav__links">
           <a href="#features">Features</a>
           <a href="#impact">Impact</a>
@@ -265,7 +266,7 @@ export default function LandingPage() {
 
       {/* FOOTER */}
       <footer className="footer">
-        <div className="footer__brand">TaxVoice</div>
+        <div className="footer__brand"><LogoMark size={24} />TaxVoice</div>
         <nav className="footer__nav">
           <a href="#">About</a>
           <a href="#">FAQ</a>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import LogoMark from '../components/LogoMark'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -31,13 +32,7 @@ export default function LoginPage() {
       <div className="auth-brand">
         <div className="auth-brand-inner">
           <div className="auth-logo">
-            <div className="auth-logo-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
-              </svg>
-            </div>
+            <LogoMark size={36} />
             <span className="auth-logo-text">TaxVoice</span>
           </div>
 
