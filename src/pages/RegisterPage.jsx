@@ -18,9 +18,7 @@ export default function RegisterPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: { full_name: fullName }
-      }
+      options: { data: { full_name: fullName } },
     })
 
     if (error) {
@@ -32,64 +30,113 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Daftar ke TaxVoice</h1>
-        <p className="text-gray-500 mb-6">Sudah punya akun? <Link to="/login" className="text-blue-600 hover:underline">Masuk di sini</Link></p>
+    <div className="auth-page">
 
-        {error && (
-          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleRegister} className="flex flex-col gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="Muhammad Abdul Daffa"
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+      {/* Brand panel */}
+      <div className="auth-brand">
+        <div className="auth-brand-inner">
+          <div className="auth-logo">
+            <div className="auth-logo-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <span className="auth-logo-text">TaxVoice</span>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="contoh@email.com"
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          <h1 className="auth-brand-headline">
+            Join 10,000+<br />civic-minded<br />Indonesians.
+          </h1>
+          <p className="auth-brand-sub">
+            TaxVoice helps students and young adults understand public finance — so you can hold your government accountable.
+          </p>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-              minLength={6}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          <ul className="auth-features">
+            <li>Free to use — no credit card required</li>
+            <li>Built for Indonesian university students</li>
+            <li>Data sourced from Kemenkeu &amp; BPS</li>
+          </ul>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition disabled:opacity-50"
-          >
-            {loading ? 'Memproses...' : 'Daftar'}
-          </button>
-        </form>
+          <div className="auth-brand-stat">
+            <span className="auth-stat-num">10.4%</span>
+            <span className="auth-stat-label">Indonesia's tax-to-GDP ratio — below the 15% minimum recommended by the IMF for development.</span>
+          </div>
+        </div>
       </div>
+
+      {/* Form panel */}
+      <div className="auth-form-side">
+        <div className="auth-form-inner">
+          <h2 className="auth-form-title">Create account</h2>
+          <p className="auth-form-sub">
+            Already have an account? <Link to="/login">Sign in</Link>
+          </p>
+
+          {error && (
+            <div className="auth-error" role="alert">{error}</div>
+          )}
+
+          <form onSubmit={handleRegister}>
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="reg-name">Full name</label>
+              <input
+                id="reg-name"
+                className="auth-input"
+                type="text"
+                value={fullName}
+                onChange={e => setFullName(e.target.value)}
+                placeholder="Your full name"
+                required
+                autoComplete="name"
+              />
+            </div>
+
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="reg-email">Email address</label>
+              <input
+                id="reg-email"
+                className="auth-input"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                autoComplete="email"
+              />
+            </div>
+
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="reg-password">Password</label>
+              <input
+                id="reg-password"
+                className="auth-input"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="At least 6 characters"
+                required
+                minLength={6}
+                autoComplete="new-password"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="auth-submit"
+              disabled={loading}
+            >
+              {loading ? 'Creating account...' : 'Create account'}
+            </button>
+          </form>
+
+          <p style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '1.25rem', lineHeight: 1.5 }}>
+            By creating an account you agree to our terms of service and acknowledge our privacy policy.
+          </p>
+        </div>
+      </div>
+
     </div>
   )
 }

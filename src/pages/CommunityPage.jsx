@@ -250,7 +250,8 @@ export default function CommunityPage() {
                       className={`post-upvote-btn ${liked ? 'post-upvote-btn--active' : ''}`}
                       onClick={e => handleUpvote(e, post.id)}
                       disabled={!currentUser || likeLoading.has(post.id)}
-                      title={liked ? 'Remove upvote' : 'Upvote this post'}
+                      aria-pressed={liked}
+                      aria-label={`${liked ? 'Remove upvote' : 'Upvote'} — ${post.likes_count} upvotes`}
                     >
                       <svg width="13" height="13" viewBox="0 0 24 24" fill={liked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z" />

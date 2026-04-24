@@ -164,7 +164,11 @@ export default function CreatePostPage() {
           ) : (
             <div
               className={`createpost-image-zone ${dragOver ? 'createpost-image-zone--over' : ''}`}
+              role="button"
+              tabIndex={0}
+              aria-label="Upload image — click or drag and drop"
               onClick={() => fileInputRef.current?.click()}
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInputRef.current?.click() } }}
               onDragOver={e => { e.preventDefault(); setDragOver(true) }}
               onDragLeave={() => setDragOver(false)}
               onDrop={e => {

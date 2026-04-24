@@ -262,8 +262,13 @@ export default function CommunityDetailPage() {
             className={`detail-like-btn ${hasLiked ? 'detail-like-btn--active' : ''}`}
             onClick={handlePostLike}
             disabled={likeLoading}
+            aria-pressed={hasLiked}
+            aria-label={`${hasLiked ? 'Remove like' : 'Like this post'} — ${likesCount} ${likesCount === 1 ? 'like' : 'likes'}`}
           >
-            {hasLiked ? '♥' : '♡'} {likesCount} {likesCount === 1 ? 'like' : 'likes'}
+            <svg width="15" height="15" viewBox="0 0 24 24" fill={hasLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            <span>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
           </button>
           <span className="detail-reply-count">
             💬 {replies.length} {replies.length === 1 ? 'reply' : 'replies'}
@@ -332,7 +337,8 @@ export default function CommunityDetailPage() {
                 className={`reply-upvote-btn ${reply.is_liked ? 'reply-upvote-btn--active' : ''}`}
                 onClick={() => handleReplyUpvote(reply.id)}
                 disabled={!currentUser || replyLikeLoading.has(reply.id)}
-                title={reply.is_liked ? 'Remove upvote' : 'Upvote this reply'}
+                aria-pressed={reply.is_liked}
+                aria-label={`${reply.is_liked ? 'Remove upvote' : 'Upvote'} — ${reply.likes_count} upvotes`}
               >
                 <svg
                   width="13" height="13" viewBox="0 0 24 24"

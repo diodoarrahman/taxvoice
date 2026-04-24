@@ -99,25 +99,22 @@ export default function LandingPage() {
           <span className="section-eyebrow">Why it matters</span>
           <h2 className="section-title">Indonesia's Tax Gap Is Real</h2>
           <p className="section-sub">
-            Low tax morale costs the country billions every year. TaxVoice bridges
-            the gap between citizens and their government through education,
-            participation, and transparency.
+            At just <strong>10.4% of GDP</strong>, Indonesia collects far less tax than the IMF's 15% development threshold — costing an estimated <strong>Rp340 trillion</strong> annually. Meanwhile, <strong>67% of taxpayers</strong> don't know where their money actually goes. Low awareness breeds low compliance. TaxVoice exists to break that cycle.
           </p>
-          <div className="problem__cards">
-            <div className="problem__card">
-              <span className="problem__card-num">10.4%</span>
-              <span className="problem__card-title">Tax-to-GDP Ratio</span>
-              <span className="problem__card-sub">Below the 15% minimum recommended by IMF for development</span>
+          <div className="problem__facts">
+            <div className="problem__fact">
+              <span className="problem__fact-num">10.4%</span>
+              <span className="problem__fact-label">Tax-to-GDP ratio — below IMF's 15% minimum</span>
             </div>
-            <div className="problem__card">
-              <span className="problem__card-num">Rp340T</span>
-              <span className="problem__card-title">Estimated Tax Gap</span>
-              <span className="problem__card-sub">Annual revenue lost due to low compliance and awareness</span>
+            <div className="problem__fact-sep" aria-hidden="true" />
+            <div className="problem__fact">
+              <span className="problem__fact-num">Rp340T</span>
+              <span className="problem__fact-label">Annual revenue lost to low compliance</span>
             </div>
-            <div className="problem__card">
-              <span className="problem__card-num">67%</span>
-              <span className="problem__card-title">Uninformed Citizens</span>
-              <span className="problem__card-sub">Of taxpayers are unsure where their tax money actually goes</span>
+            <div className="problem__fact-sep" aria-hidden="true" />
+            <div className="problem__fact">
+              <span className="problem__fact-num">67%</span>
+              <span className="problem__fact-label">Of taxpayers unsure where their money goes</span>
             </div>
           </div>
         </div>
@@ -129,52 +126,39 @@ export default function LandingPage() {
         <h2 className="section-title">Everything you need to engage</h2>
         <p className="section-sub">Four tools designed to educate, simulate, and connect citizens with public finance.</p>
         <div className="features__grid">
-          <div className="feature-card">
-            <div className="feature-card__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-              </svg>
+          {/* Featured card — full width, horizontal layout */}
+          <div className="feature-card feature-card--featured">
+            <div className="feature-card__featured-body">
+              <span className="feature-card__tag">Simulate</span>
+              <h3>Budget Simulator</h3>
+              <p>Allocate Indonesia's national budget across five sectors and get scored against real economic benchmarks. See the tradeoffs policymakers face — and form your own evidence-based opinion.</p>
+              <Link to="/register" className="feature-card__link">Try the simulator →</Link>
             </div>
+            <div className="feature-card__featured-aside">
+              <div className="feature-card__featured-stat">
+                <span className="feature-card__featured-num">Rp3,106T</span>
+                <span className="feature-card__featured-label">2024 State Budget — allocate it yourself</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Three supporting cards */}
+          <div className="feature-card">
             <span className="feature-card__tag">Learn</span>
             <h3>Knowledge Hub</h3>
-            <p>Articles on tax policy, budget transparency, and civic rights — in plain, accessible language.</p>
+            <p>Tax policy and budget transparency explained in plain language — no economics degree required.</p>
             <Link to="/register" className="feature-card__link">Explore articles →</Link>
           </div>
           <div className="feature-card">
-            <div className="feature-card__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-              </svg>
-            </div>
-            <span className="feature-card__tag">Simulate</span>
-            <h3>Budget Simulator</h3>
-            <p>Allocate the national budget yourself and see how your choices score against real economic data.</p>
-            <Link to="/register" className="feature-card__link">Try simulator →</Link>
-          </div>
-          <div className="feature-card">
-            <div className="feature-card__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-              </svg>
-            </div>
             <span className="feature-card__tag">Participate</span>
             <h3>Budget Preference</h3>
-            <p>Tell the government how you'd like your taxes spent — sector by sector, with real data behind it.</p>
+            <p>Tell the government how you'd like your taxes spent — sector by sector, backed by real data.</p>
             <Link to="/register" className="feature-card__link">Share preference →</Link>
           </div>
           <div className="feature-card" id="community">
-            <div className="feature-card__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-            </div>
             <span className="feature-card__tag">Engage</span>
             <h3>Community Forum</h3>
-            <p>Discuss public policy, share ideas, and connect with fellow citizens — transparently and openly.</p>
+            <p>Discuss public policy, share ideas, and connect with fellow citizens openly.</p>
             <Link to="/register" className="feature-card__link">Join discussion →</Link>
           </div>
         </div>

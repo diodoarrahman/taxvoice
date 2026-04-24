@@ -17,7 +17,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
-      setError(error.message)
+      setError('Incorrect email or password. Please try again.')
       setLoading(false)
     } else {
       navigate('/impact')
@@ -25,51 +25,94 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Masuk ke TaxVoice</h1>
-        <p className="text-gray-500 mb-6">Belum punya akun? <Link to="/register" className="text-blue-600 hover:underline">Daftar di sini</Link></p>
+    <div className="auth-page">
 
-        {error && (
-          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleLogin} className="flex flex-col gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="contoh@email.com"
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+      {/* Brand panel */}
+      <div className="auth-brand">
+        <div className="auth-brand-inner">
+          <div className="auth-logo">
+            <div className="auth-logo-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <span className="auth-logo-text">TaxVoice</span>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          <h1 className="auth-brand-headline">
+            Your taxes.<br />Your voice.<br />Your future.
+          </h1>
+          <p className="auth-brand-sub">
+            Understand where your money goes and help shape Indonesia's fiscal future through education, simulation, and civic discussion.
+          </p>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition disabled:opacity-50"
-          >
-            {loading ? 'Memproses...' : 'Masuk'}
-          </button>
-        </form>
+          <ul className="auth-features">
+            <li>Real-time budget data from Kemenkeu &amp; BPS</li>
+            <li>Interactive tax &amp; budget simulator</li>
+            <li>Community forum for civic discourse</li>
+          </ul>
+
+          <div className="auth-brand-stat">
+            <span className="auth-stat-num">67%</span>
+            <span className="auth-stat-label">of Indonesian taxpayers are unsure where their taxes actually go. TaxVoice bridges that gap.</span>
+          </div>
+        </div>
       </div>
+
+      {/* Form panel */}
+      <div className="auth-form-side">
+        <div className="auth-form-inner">
+          <h2 className="auth-form-title">Sign in</h2>
+          <p className="auth-form-sub">
+            Don't have an account? <Link to="/register">Create one — it's free</Link>
+          </p>
+
+          {error && (
+            <div className="auth-error" role="alert">{error}</div>
+          )}
+
+          <form onSubmit={handleLogin}>
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="login-email">Email address</label>
+              <input
+                id="login-email"
+                className="auth-input"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                autoComplete="email"
+              />
+            </div>
+
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="login-password">Password</label>
+              <input
+                id="login-password"
+                className="auth-input"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+                autoComplete="current-password"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="auth-submit"
+              disabled={loading}
+            >
+              {loading ? 'Signing in...' : 'Sign in'}
+            </button>
+          </form>
+        </div>
+      </div>
+
     </div>
   )
 }
