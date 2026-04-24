@@ -42,6 +42,7 @@ export default function CommunityPage() {
           id,
           title,
           content,
+          image_url,
           created_at,
           user_id,
           users (full_name),
@@ -225,6 +226,14 @@ export default function CommunityPage() {
                 aria-label={`Read post: ${post.title}`}
               >
                 <div className="community-card-body">
+                  {post.image_url && (
+                    <img
+                      className="community-card-image"
+                      src={post.image_url}
+                      alt=""
+                      loading="lazy"
+                    />
+                  )}
                   <h2 className="community-card-title">{post.title}</h2>
                   <p className="community-card-excerpt">{excerpt(post.content)}</p>
                 </div>

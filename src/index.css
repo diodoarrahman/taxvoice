@@ -2382,6 +2382,102 @@ body {
   cursor: not-allowed;
 }
 
+/* Image upload zone */
+.createpost-optional {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.createpost-image-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: #f8fafc;
+  text-align: center;
+  user-select: none;
+}
+
+.createpost-image-zone:hover,
+.createpost-image-zone--over {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.createpost-image-zone-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.createpost-image-zone-hint {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* Image preview */
+.createpost-image-preview {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid #e2e8f0;
+}
+
+.createpost-image-preview img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.createpost-image-remove {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  line-height: 1;
+}
+
+.createpost-image-remove:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.createpost-image-filename {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+  color: #64748b;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Community feed card image */
+.community-card-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
 /* ============================================
    COMMUNITY DETAIL PAGE — tambahkan ke src/index.css
    ============================================ */
@@ -2427,6 +2523,15 @@ body {
   color: #1e293b;
   margin: 0 0 1rem;
   line-height: 1.4;
+}
+
+.detail-post-image {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+  display: block;
 }
 
 .detail-post-content {

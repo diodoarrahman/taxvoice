@@ -45,7 +45,7 @@ export default function CommunityDetailPage() {
     setLoadingPost(true)
     const { data, error } = await supabase
       .from('forum_posts')
-      .select('id, title, content, created_at, user_id, users (full_name)')
+      .select('id, title, content, image_url, created_at, user_id, users (full_name)')
       .eq('id', id)
       .single()
 
@@ -195,6 +195,14 @@ export default function CommunityDetailPage() {
 
   async function handleDeletePost() {
     if (!window.confirm('Are you sure you want to delete this post?')) return
+
+    if (post.image_url) {
+      const parts = post.image_url.split('/post-images/')
+      if (parts.length > 1) {
+        await supabase.storage.from('post-images').remove([parts[1].split('?')[0]])
+      }
+    }
+
     const { error } = await supabase.from('forum_posts').delete().eq('id', id)
     if (!error) navigate('/community')
   }
@@ -239,6 +247,14 @@ export default function CommunityDetailPage() {
         </div>
 
         <h1 className="detail-post-title">{post.title}</h1>
+        {post.image_url && (
+          <img
+            className="detail-post-image"
+            src={post.image_url}
+            alt="Post attachment"
+            loading="lazy"
+          />
+        )}
         <p className="detail-post-content">{post.content}</p>
 
         <div className="detail-post-footer">
