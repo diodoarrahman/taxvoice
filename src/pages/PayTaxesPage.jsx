@@ -246,7 +246,7 @@ export default function PayTaxesPage() {
             return (
               <div key={s.key} className="sector-card">
                 <div className="sector-header">
-                  <div className="sector-icon" style={{ background: s.color + '22' }}>{s.icon}</div>
+                  <div className="sector-icon">{s.icon}</div>
                   <div className="sector-name">{s.label}</div>
                   <div className="sector-pct" style={{ color: s.color }}>{values[s.key]}%</div>
                 </div>

@@ -4,6 +4,54 @@ import { supabase } from '../lib/supabase'
 
 const CATEGORIES = ['All', 'tax', 'budget', 'transparency', 'development', 'guide', 'education']
 
+const ThumbIcons = {
+  tax: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 22V9l9-7 9 7v13"/><path d="M9 22V14h6v8"/>
+    </svg>
+  ),
+  budget: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9"/><path d="M12 3v9l5.4 5.4"/>
+    </svg>
+  ),
+  transparency: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+    </svg>
+  ),
+  development: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+    </svg>
+  ),
+  guide: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    </svg>
+  ),
+  education: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+    </svg>
+  ),
+  default: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+    </svg>
+  ),
+}
+
+const categoryThumb = {
+  tax:          { bg: 'oklch(31% 0.18 260)', icon: ThumbIcons.tax },
+  budget:       { bg: 'oklch(29% 0.16 290)', icon: ThumbIcons.budget },
+  transparency: { bg: 'oklch(28% 0.17 20)',  icon: ThumbIcons.transparency },
+  development:  { bg: 'oklch(33% 0.12 55)',  icon: ThumbIcons.development },
+  guide:        { bg: 'oklch(28% 0.14 300)', icon: ThumbIcons.guide },
+  education:    { bg: 'oklch(30% 0.12 168)', icon: ThumbIcons.education },
+  default:      { bg: 'oklch(28% 0.05 260)', icon: ThumbIcons.default },
+}
+
 export default function KnowledgePage() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
@@ -86,24 +134,47 @@ export default function KnowledgePage() {
   )
 }
 
+const categoryColors = {
+  tax: '#2563eb',
+  budget: '#7c3aed',
+  transparency: '#dc2626',
+  development: '#d97706',
+  guide: '#7c3aed',
+  education: '#059669',
+}
+
+function ArticleThumbnail({ url, category, title }) {
+  const [imgError, setImgError] = useState(false)
+  const thumb = categoryThumb[category] || categoryThumb.default
+
+  if (!url || imgError) {
+    return (
+      <div className="article-thumb-placeholder" style={{ backgroundColor: thumb.bg }}>
+        <span className="article-thumb-svg">{thumb.icon}</span>
+      </div>
+    )
+  }
+
+  return (
+    <img
+      src={url}
+      alt={title}
+      loading="lazy"
+      decoding="async"
+      onError={() => setImgError(true)}
+    />
+  )
+}
+
 function ArticleCard({ article }) {
   const formattedDate = new Date(article.created_at).toLocaleDateString('id-ID', {
     day: 'numeric', month: 'long', year: 'numeric'
   })
 
-  const categoryColors = {
-    tax: '#2563eb',
-    budget: '#7c3aed',
-    transparency: '#dc2626',
-    development: '#d97706',
-    guide: '#7c3aed',
-    education: '#059669',
-  }
-
   return (
     <Link to={`/knowledge/${article.id}`} className="article-card">
       <div className="article-thumbnail">
-        <img src={article.thumbnail_url} alt={article.title} loading="lazy" decoding="async" />
+        <ArticleThumbnail url={article.thumbnail_url} category={article.category} title={article.title} />
         <span
           className="article-category-badge"
           style={{ backgroundColor: categoryColors[article.category] || '#6b7280' }}

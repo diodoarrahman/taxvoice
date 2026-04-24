@@ -4,6 +4,45 @@ import {
   LineChart, Line
 } from 'recharts'
 
+const positiveNews = [
+  {
+    id: 1,
+    title: 'Dana BOS Bantu 53 Juta Siswa di Seluruh Indonesia',
+    source: 'Kemenkeu RI',
+    date: '15 Apr 2025',
+    tag: 'Pendidikan',
+    tagColor: '#2563eb',
+    excerpt: 'Pemerintah menyalurkan Rp 60 triliun dana BOS dari penerimaan pajak untuk mendukung biaya operasional sekolah negeri di seluruh Indonesia, memastikan pendidikan gratis bagi jutaan anak bangsa.',
+  },
+  {
+    id: 2,
+    title: 'Tol Trans-Jawa Selesai: Waktu Tempuh Jakarta–Surabaya Memendek',
+    source: 'Kementerian PUPR',
+    date: '2 Apr 2025',
+    tag: 'Infrastruktur',
+    tagColor: '#059669',
+    excerpt: 'Proyek infrastruktur strategis yang dibiayai APBN berhasil diselesaikan. Waktu tempuh Jakarta–Surabaya kini berkurang signifikan, mendorong pertumbuhan ekonomi regional.',
+  },
+  {
+    id: 3,
+    title: 'Program JKN Capai 270 Juta Peserta, Terbesar di Dunia',
+    source: 'BPJS Kesehatan',
+    date: '20 Mar 2025',
+    tag: 'Kesehatan',
+    tagColor: '#dc2626',
+    excerpt: 'Didukung subsidi APBN dari penerimaan pajak, cakupan JKN Indonesia kini menjadi sistem jaminan kesehatan nasional terbesar di dunia, menjamin akses layanan medis seluruh warga.',
+  },
+  {
+    id: 4,
+    title: 'Subsidi Pupuk Pacu Produktivitas Padi Nasional Naik 7%',
+    source: 'Kementerian Pertanian',
+    date: '8 Mar 2025',
+    tag: 'Pertanian',
+    tagColor: '#d97706',
+    excerpt: 'Alokasi subsidi pupuk dari APBN sebesar Rp 25 triliun terbukti meningkatkan produktivitas padi nasional hingga 7%, memperkuat ketahanan pangan dan pendapatan petani lokal.',
+  },
+]
+
 // Data dummy
 const budgetAllocation = [
   { name: 'Education', value: 20 },
@@ -63,6 +102,30 @@ export default function ImpactPage() {
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
           </svg>
         } />
+      </div>
+
+      {/* Positive News */}
+      <div className="positive-news-section">
+        <header className="positive-news-header">
+          <h2 className="positive-news-title">Pajak Untuk Kita</h2>
+          <p className="positive-news-sub">Dampak nyata penerimaan pajak bagi masyarakat Indonesia</p>
+        </header>
+        <div className="news-list">
+          {positiveNews.map((news, i) => (
+            <article key={news.id} className="news-row">
+              <span className="news-num">0{i + 1}</span>
+              <div className="news-content">
+                <div className="news-meta-top">
+                  <span className="news-tag" style={{ color: news.tagColor }}>{news.tag}</span>
+                  <span className="news-date">{news.date}</span>
+                </div>
+                <h3 className="news-title">{news.title}</h3>
+                <p className="news-excerpt">{news.excerpt}</p>
+                <span className="news-source">{news.source}</span>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
 
       {/* Charts */}
@@ -161,3 +224,4 @@ function StatCard({ label, value, icon, color }) {
     </div>
   )
 }
+

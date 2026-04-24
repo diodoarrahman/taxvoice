@@ -282,8 +282,7 @@ export default function SimulatorPage() {
             {SECTORS.map(s => (
               <div key={s.key} className="sim-sector">
                 <div className="sim-sector-header">
-                  <span className="sim-sector-icon"
-                    style={{ background: s.color + '22' }}>{s.icon}</span>
+                  <span className="sim-sector-icon">{s.icon}</span>
                   <span className="sim-sector-name">{s.label}</span>
                   <span className="sim-sector-ideal">Ideal: {s.ideal}%</span>
                   <span className="sim-sector-val" style={{ color: s.color }}>
@@ -358,25 +357,13 @@ export default function SimulatorPage() {
               {/* Overall Score */}
               <div className="sim-score-card">
                 <div className="sim-score-left">
-                  <div className="sim-score-num"
-                    style={{ color: overallGrade.color }}>
-                    {result.overall}
-                  </div>
+                  <div className="sim-score-num">{result.overall}</div>
                   <div className="sim-score-label">Overall Score</div>
                   <div className="sim-score-sub">out of 100</div>
                 </div>
                 <div className="sim-score-right">
-                  <div className="sim-grade"
-                    style={{
-                      background: overallGrade.color + '18',
-                      color: overallGrade.color,
-                    }}>
-                    {overallGrade.grade}
-                  </div>
-                  <div className="sim-grade-label"
-                    style={{ color: overallGrade.color }}>
-                    {overallGrade.label}
-                  </div>
+                  <div className="sim-grade">{overallGrade.grade}</div>
+                  <div className="sim-grade-label">{overallGrade.label}</div>
                 </div>
               </div>
 
