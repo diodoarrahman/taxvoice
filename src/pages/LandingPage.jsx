@@ -535,7 +535,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <WaveDown fill="oklch(0.985 0.007 264)" from="oklch(0.965 0.016 264)"/>
+      <WaveDown fill="oklch(0.985 0.007 264)" from="oklch(0.095 0.04 264)"/>
 
       {/* ── PROBLEM STATEMENT ───────────────────────────────── */}
       <section className="problem">
@@ -823,7 +823,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <WaveDown fill="#1e3a8a" from="oklch(0.97 0.014 264)"/>
+      <WaveDown fill="oklch(0.105 0.045 264)" from="oklch(0.97 0.014 264)"/>
 
       {/* ── CTA ─────────────────────────────────────────────── */}
       <section className="cta">

@@ -5126,3 +5126,187 @@ body {
     transition: none !important;
   }
 }
+
+/* ============================================================
+   BOLDER — EDITORIAL AMPLIFICATION
+   Dark nav/hero, Bricolage at full variable range,
+   amber accent, dramatic type scale
+   ============================================================ */
+
+/* ── Dark editorial nav: seamless with hero ─────────────────── */
+.landing .landing-nav {
+  background: oklch(0.12 0.05 264);
+  border-bottom-color: rgba(255,255,255,0.05);
+}
+.landing .landing-nav__logo { color: oklch(0.97 0.015 264); }
+.landing .landing-nav__links a { color: oklch(0.60 0.022 264); }
+.landing .landing-nav__links a:hover { color: oklch(0.97 0.015 264); }
+.landing .landing-nav__login { color: oklch(0.60 0.022 264); }
+.landing .landing-nav__login:hover {
+  background: rgba(255,255,255,0.07);
+  color: oklch(0.97 0.015 264);
+}
+.landing .landing-nav__cta {
+  background: oklch(0.80 0.14 80);
+  color: oklch(0.10 0.04 264);
+  font-weight: 700;
+}
+.landing .landing-nav__cta:hover { background: oklch(0.84 0.14 80); }
+
+/* ── Dark editorial hero ─────────────────────────────────────── */
+.hero {
+  background-color: oklch(0.12 0.05 264);
+  padding: 72px 56px 84px;
+  min-height: 520px;
+}
+
+.hero__badge {
+  background: rgba(255,255,255,0.07);
+  color: oklch(0.78 0.055 264);
+  border-color: rgba(255,255,255,0.10);
+  letter-spacing: 0.04em;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7.2vw, 5.75rem);
+  font-weight: 800;
+  font-variation-settings: 'opsz' 48, 'wdth' 100;
+  color: oklch(0.97 0.012 264);
+  letter-spacing: -0.035em;
+  line-height: 1.01;
+}
+
+.hero__title--accent { color: oklch(0.80 0.14 80); }
+
+.hero__desc {
+  color: oklch(0.64 0.020 264);
+  line-height: 1.8;
+}
+
+.hero__stats { border-top-color: rgba(255,255,255,0.09); }
+
+.hero__stat-num {
+  font-size: clamp(1.4rem, 2.7vw, 1.95rem);
+  font-weight: 800;
+  font-variation-settings: 'opsz' 24, 'wdth' 100;
+  color: oklch(0.97 0.015 264);
+}
+
+.hero__stat-label { color: oklch(0.52 0.016 264); }
+.hero__stat-divider { background: rgba(255,255,255,0.09); }
+
+/* Hero CTAs on dark background */
+.hero .btn-primary-dark {
+  background: oklch(0.80 0.14 80);
+  color: oklch(0.10 0.04 264);
+  font-weight: 700;
+}
+.hero .btn-primary-dark:hover {
+  background: oklch(0.84 0.14 80);
+  transform: translateY(-2px);
+}
+.hero .btn-outline-dark {
+  border-color: rgba(255,255,255,0.20);
+  color: oklch(0.86 0.012 264);
+}
+.hero .btn-outline-dark:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.38);
+  color: oklch(0.97 0.012 264);
+  transform: translateY(-2px);
+}
+
+/* Hero floating data cards on dark field */
+.hero__card {
+  background: oklch(0.19 0.07 264);
+  border-color: rgba(255,255,255,0.10);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+}
+.hero__card-num { color: oklch(0.97 0.015 264); }
+.hero__card-label { color: oklch(0.56 0.018 264); }
+
+/* Hero photo frame on dark bg: remove tint filter — let it pop */
+.hero .hero__photo-frame img { filter: none; }
+
+/* Compass ornament: visible on dark */
+.hero__ornament {
+  color: oklch(0.97 0.01 264);
+  opacity: 0.042;
+}
+
+/* Float badges on dark: boost drop-shadow contrast */
+.hero__float-rp {
+  filter: drop-shadow(0 4px 14px rgba(251,191,36,0.5));
+}
+.hero__float-pct {
+  filter: drop-shadow(0 4px 14px rgba(255,255,255,0.08));
+}
+
+/* ── Data ticker: seamlessly dark ────────────────────────────── */
+.data-ticker {
+  background: oklch(0.095 0.04 264);
+  border-top-color: rgba(255,255,255,0.03);
+  border-bottom-color: rgba(255,255,255,0.03);
+}
+
+/* ── Typography: dramatic scale throughout ───────────────────── */
+.section-title {
+  font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.07;
+}
+
+.section-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+/* ── Problem: towering fact numbers ─────────────────────────── */
+.problem__fact-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+  font-weight: 800;
+  font-variation-settings: 'opsz' 48, 'wdth' 100;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+}
+
+/* ── CTA: amplified dark closer ─────────────────────────────── */
+.cta {
+  background-color: oklch(0.105 0.045 264);
+  padding: 100px 56px;
+}
+
+.cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.5vw, 4rem);
+  font-weight: 800;
+  font-variation-settings: 'opsz' 48, 'wdth' 100;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.cta .btn-primary-dark {
+  background: oklch(0.80 0.14 80);
+  color: oklch(0.10 0.04 264);
+  font-size: 16px;
+  padding: 15px 42px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.cta .btn-primary-dark:hover {
+  background: oklch(0.84 0.14 80);
+  transform: translateY(-2px);
+}
+
+.cta__deco { color: rgba(255,255,255,0.025); }
+
+/* ── Mobile: maintain drama at smaller breakpoints ──────────── */
+@media (max-width: 768px) {
+  .hero { padding: 48px 24px 60px; min-height: auto; }
+  .cta { padding: 72px 24px; }
+  .landing .landing-nav { padding: 0 20px; }
+}
